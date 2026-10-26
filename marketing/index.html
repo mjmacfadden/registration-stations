@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Micro-Lab: Build a Bottled Water Brand with AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti for Completion -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Shared Titan School of Business theme & styles -->
+    <script src="../assets/theme.js"></script>
+    <link rel="stylesheet" href="../assets/common.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-slate-950">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+
+            <!-- Branding -->
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400 hover:bg-amber-500/20 transition shrink-0" title="Back to Titan School of Business">
+                    <i data-lucide="sparkles" class="w-6 h-6"></i>
+                </a>
+                <div>
+                    <a href="../index.html" class="text-xs font-semibold uppercase tracking-wider text-amber-400 hover:text-amber-300 transition">Titan School of Business</a>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500"> &bull; MKT 215 &bull; AI Branding Lab</span>
+                    <h1 class="text-lg font-bold text-slate-100 leading-tight">Build a Bottled Water Brand</h1>
+                </div>
+            </div>
+
+            <!-- Timer Widget -->
+            <div class="flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
+                <i data-lucide="clock" class="w-4 h-4 text-amber-400 animate-pulse"></i>
+                <div class="text-xl font-mono font-bold text-amber-400 tracking-wider" id="timer-display">07:00</div>
+                <div class="flex items-center gap-1 border-l border-slate-800 pl-3">
+                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Play/Pause Timer">
+                        <i data-lucide="play" id="timer-play-icon" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Reset Timer">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Controls (Progress & Theme) -->
+            <div class="flex items-center gap-3">
+                <!-- Progress Tracker -->
+                <div class="flex items-center gap-2 text-xs">
+                    <span class="text-slate-400 font-medium">Progress:</span>
+                    <div class="w-28 sm:w-32 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700/50">
+                        <div id="progress-bar" class="bg-gradient-to-r from-amber-500 to-amber-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                    <span id="progress-percent" class="text-amber-400 font-mono font-semibold">0%</span>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" id="theme-toggle-btn" class="px-2.5 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-slate-100 transition flex items-center gap-1.5 text-xs font-medium shrink-0" title="Switch Theme">
+                    <i data-lucide="sun" id="theme-toggle-icon" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span id="theme-toggle-label">Light View</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Phase Navigation Tabs -->
+        <div class="flex border-b border-slate-800 mb-8 no-print overflow-x-auto">
+            <button id="tab-1" onclick="switchPhase(1)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-amber-400 text-amber-400 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-amber-400/20 text-amber-400 text-xs flex items-center justify-center font-bold">1</span>
+                Phase 1: The Brief (2m)
+            </button>
+            <button id="tab-2" onclick="switchPhase(2)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold">2</span>
+                Phase 2: Gemini Mockup Studio (5m)
+            </button>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PHASE 1: THE BRIEF                         -->
+        <!-- ========================================== -->
+        <section id="phase-1" class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6">
+                    <div>
+                        <span class="inline-block px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded text-xs font-mono uppercase mb-2">
+                            Real Marketing Paradox
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 serif">Selling the Exact Same Product For 3x the Price</h2>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Liquid Death Valuation</span>
+                        <span class="text-2xl font-bold font-mono text-emerald-400">$1.4 Billion</span>
+                    </div>
+                </div>
+
+                <!-- Case File Details Grid -->
+                <div class="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-2 text-amber-400 font-semibold mb-1">
+                            <i data-lucide="droplet" class="w-4 h-4"></i> The Physical Product
+                        </div>
+                        <p class="text-slate-200 font-medium">Plain, filtered water in a container</p>
+                        <p class="text-xs text-slate-400">Chemically almost identical across every brand on the shelf.</p>
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-2 text-sky-400 font-semibold mb-1">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i> The Marketing Opportunity
+                        </div>
+                        <p class="text-slate-200 font-medium">Brand identity, positioning &amp; perceived value</p>
+                        <p class="text-xs text-slate-400">The differentiator customers actually pay for.</p>
+                    </div>
+                </div>
+
+                <!-- Narrative Brief -->
+                <div class="space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base">
+                    <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-5 h-5 text-amber-400"></i> Why Bottled Water Is the Ultimate Branding Test
+                    </h3>
+                    <p>
+                        Bottled water is one of the most undifferentiated products on earth &mdash; it's just water. Yet <strong class="text-amber-300">Liquid Death</strong> built a brand around "murdering your thirst" with punk-metal cans and reached a $1.4 billion valuation. <strong class="text-amber-300">Fiji Water</strong> charges roughly 3x the price of generic water with its "untouched by man" island narrative. <strong class="text-amber-300">Smartwater</strong> uses sleek minimalist branding and electrolyte promises to justify a premium price.
+                    </p>
+                    <p>
+                        None of these companies changed the water itself. They changed the <em class="text-slate-100 font-medium">story and lifestyle</em> customers connect with. That's your marketing challenge today.
+                    </p>
+
+                    <!-- Breakdown Box -->
+                    <div class="bg-slate-950 border-l-4 border-amber-500 p-4 rounded-r-xl my-4 space-y-2">
+                        <h4 class="font-bold text-slate-100 text-sm uppercase tracking-wider text-amber-400">Your Mission in this Station:</h4>
+                        <ul class="list-disc list-inside text-xs sm:text-sm text-slate-300 space-y-1">
+                            <li>Use <strong class="text-slate-100">Google Gemini</strong> to brainstorm a brand name, niche audience, and bold tagline.</li>
+                            <li>Have <strong class="text-slate-100">Google Gemini generate the visual mockup image</strong> of your custom bottle or can directly!</li>
+                            <li>Record your final concept and marketing reflection on your worksheet.</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-500/10 border border-sky-500/40 text-sky-300 hover:bg-sky-500/20 hover:border-sky-500 rounded-xl text-sm font-semibold transition">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> Open Google Gemini in a New Tab
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="switchPhase(2)" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20">
+                        Proceed to Phase 2: Gemini Mockup Studio <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHASE 2: GEMINI MOCKUP STUDIO (REWORKED)   -->
+        <!-- ========================================== -->
+        <section id="phase-2" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-8">
+
+                <!-- Header Callout -->
+                <div class="border-b border-slate-800 pb-5 flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-mono uppercase text-amber-400">Co-Create With Generative AI</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100">Gemini Brand &amp; Mockup Studio</h2>
+                        <p class="text-slate-400 text-sm mt-1">
+                            You are using <strong class="text-sky-300">Google Gemini</strong> to both brainstorm your brand positioning AND generate the visual product mockup!
+                        </p>
+                    </div>
+                    <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-sky-500/10 border border-sky-500/40 text-sky-300 hover:bg-sky-500/20 rounded-xl text-xs font-semibold flex items-center gap-2 transition shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4"></i> Open Gemini in Side Tab
+                    </a>
+                </div>
+
+                <!-- STEP A: BRAND STRATEGY PROMPTS -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2 text-slate-100 font-bold text-base">
+                        <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 text-xs flex items-center justify-center font-mono">A</span>
+                        <h3>Step A: Brainstorm the Brand Identity with Gemini</h3>
+                    </div>
+                    <p class="text-xs text-slate-400">
+                        Copy these sample prompts into Google Gemini to find a compelling angle, or modify them with your own ideas:
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <!-- Strategy Prompt 1 -->
+                        <div class="bg-slate-950/70 border border-slate-800 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-xs text-amber-400 font-semibold uppercase tracking-wider">
+                                    <span>Brand Name &amp; Vibe</span>
+                                    <span class="text-[0.65rem] text-slate-500">Gemini Prompt</span>
+                                </div>
+                                <p id="prompt-text-name" class="text-xs text-slate-300 font-mono bg-slate-900 p-3 rounded-lg border border-slate-800 leading-relaxed">
+                                    Act as a creative branding director. Suggest 5 bold, memorable brand names for a new bottled water company targeting [pick a niche: gamers / skaters / gym athletes / eco-warriors / busy high schoolers]. For each name, explain the vibe and why it stands out.
+                                </p>
+                            </div>
+                            <button onclick="copyPrompt('name')" id="btn-copy-name" class="w-full py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Name Prompt</span>
+                            </button>
+                        </div>
+
+                        <!-- Strategy Prompt 2 -->
+                        <div class="bg-slate-950/70 border border-slate-800 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-xs text-amber-400 font-semibold uppercase tracking-wider">
+                                    <span>Tagline &amp; Positioning</span>
+                                    <span class="text-[0.65rem] text-slate-500">Gemini Prompt</span>
+                                </div>
+                                <p id="prompt-text-tagline" class="text-xs text-slate-300 font-mono bg-slate-900 p-3 rounded-lg border border-slate-800 leading-relaxed">
+                                    For my chosen water brand '[Insert Brand Name]', write 4 punchy, bold taglines (under 7 words) that convince people to pay $3.50 for a bottle of plain water. Give each tagline an emotional hook.
+                                </p>
+                            </div>
+                            <button onclick="copyPrompt('tagline')" id="btn-copy-tagline" class="w-full py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Tagline Prompt</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP B: VISUAL MOCKUP PROMPTS -->
+                <div class="space-y-4 pt-2">
+                    <div class="flex items-center gap-2 text-slate-100 font-bold text-base">
+                        <span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs flex items-center justify-center font-mono">B</span>
+                        <h3>Step B: Have Gemini Generate the Visual Product Mockup!</h3>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <strong class="text-emerald-400">Important:</strong> Google Gemini can create the actual photorealistic mockup image of your container! Tell Gemini to generate an image using one of the templates below:
+                    </p>
+
+                    <!-- Mockup Templates Grid -->
+                    <div class="grid sm:grid-cols-3 gap-4">
+
+                        <!-- Template 1: Sleek Minimalist Studio -->
+                        <div class="bg-slate-950/70 border border-slate-800 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-1.5 text-xs text-sky-400 font-bold">
+                                    <i data-lucide="image" class="w-3.5 h-3.5"></i> Style 1: Sleek Studio
+                                </div>
+                                <p id="prompt-mockup-1" class="text-[0.72rem] text-slate-300 font-mono bg-slate-900 p-2.5 rounded-lg border border-slate-800 leading-relaxed">
+                                    Generate a photorealistic commercial studio photograph of a premium bottled water container for a brand called '[Your Brand]'. The label clearly displays '[Your Brand]' and the tagline '[Your Tagline]'. Crisp condensation droplets, elegant studio lighting, shot against a dark slate background, 4k advertising quality.
+                                </p>
+                            </div>
+                            <button onclick="copySpecificPrompt('prompt-mockup-1', this)" class="w-full py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Style 1</span>
+                            </button>
+                        </div>
+
+                        <!-- Template 2: Edgy Can (Liquid Death Vibe) -->
+                        <div class="bg-slate-950/70 border border-slate-800 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-1.5 text-xs text-rose-400 font-bold">
+                                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> Style 2: Edgy Can
+                                </div>
+                                <p id="prompt-mockup-2" class="text-[0.72rem] text-slate-300 font-mono bg-slate-900 p-2.5 rounded-lg border border-slate-800 leading-relaxed">
+                                    Generate a photorealistic commercial photograph of a 16oz matte black aluminum water can called '[Your Brand]'. Bold typography on the label with the tagline '[Your Tagline]'. Cold ice condensation dripping down the can, dramatic cinematic lighting, sitting on a weathered stone ledge.
+                                </p>
+                            </div>
+                            <button onclick="copySpecificPrompt('prompt-mockup-2', this)" class="w-full py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Style 2</span>
+                            </button>
+                        </div>
+
+                        <!-- Template 3: Eco-Luxury Glass Bottle -->
+                        <div class="bg-slate-950/70 border border-slate-800 p-4 rounded-xl space-y-3 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-1.5 text-xs text-emerald-400 font-bold">
+                                    <i data-lucide="leaf" class="w-3.5 h-3.5"></i> Style 3: Eco-Luxury Glass
+                                </div>
+                                <p id="prompt-mockup-3" class="text-[0.72rem] text-slate-300 font-mono bg-slate-900 p-2.5 rounded-lg border border-slate-800 leading-relaxed">
+                                    Generate a photorealistic product advertisement of a luxury frosted glass water bottle named '[Your Brand]' with the tagline '[Your Tagline]'. Bamboo cap, pure spring water clarity, natural morning sunlight, sitting on a river rock next to a pristine mountain stream.
+                                </p>
+                            </div>
+                            <button onclick="copySpecificPrompt('prompt-mockup-3', this)" class="w-full py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg flex items-center justify-center gap-2 transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Style 3</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Custom Mockup Prompt Builder -->
+                    <div class="bg-slate-950 border border-amber-500/30 rounded-xl p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
+                                <i data-lucide="sliders" class="w-3.5 h-3.5"></i> Custom Prompt Builder
+                            </span>
+                            <span class="text-[0.65rem] text-slate-400">Fills in your details automatically</span>
+                        </div>
+
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                            <div>
+                                <label class="text-slate-400 block mb-1">Your Brand Name:</label>
+                                <input id="builder-name" type="text" oninput="updateBuilderPrompt()" placeholder="e.g. HydroPulse" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Your Tagline:</label>
+                                <input id="builder-tagline" type="text" oninput="updateBuilderPrompt()" placeholder="e.g. Fuel Your Focus" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Container Type:</label>
+                                <select id="builder-container" onchange="updateBuilderPrompt()" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                                    <option value="modern minimalist plastic bottle">Sleek Plastic Bottle</option>
+                                    <option value="matte black 16oz tallboy aluminum can">Matte Aluminum Can</option>
+                                    <option value="frosted artisan glass bottle with wooden cap">Frosted Glass Bottle</option>
+                                    <option value="stainless steel insulated athletic flask">Steel Sports Flask</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-slate-400 block mb-1">Lighting / Vibe:</label>
+                                <select id="builder-vibe" onchange="updateBuilderPrompt()" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                                    <option value="dramatic commercial studio lighting with water droplets on a dark reflective surface">Dark Studio Shoot</option>
+                                    <option value="bright natural sunlight outdoors by a rushing mountain stream">Nature &amp; Mountain Stream</option>
+                                    <option value="neon cyberpunk ambient lighting in an urban gym">Neon Cyberpunk</option>
+                                    <option value="clean Scandinavian minimalist aesthetic with soft morning shadows">Clean Scandinavian</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Generated Prompt Result -->
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-emerald-300">
+                            <span id="builder-output-text" class="break-all text-[0.75rem] leading-relaxed">
+                                Generate a photorealistic commercial product photograph of a modern minimalist plastic bottle for a water brand named 'HydroPulse' with the label displaying 'Fuel Your Focus', dramatic commercial studio lighting with water droplets on a dark reflective surface, 4k advertising photography.
+                            </span>
+                            <button onclick="copyBuilderPrompt()" id="btn-copy-builder" class="shrink-0 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg flex items-center gap-1.5 transition text-xs">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Prompt for Gemini</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP C: STUDENT CAPTURE & WORKSHEET CHECK -->
+                <div class="space-y-4 pt-2">
+                    <div class="flex items-center gap-2 text-slate-100 font-bold text-base">
+                        <span class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 text-xs flex items-center justify-center font-mono">C</span>
+                        <h3>Step C: Record Your Concept &amp; Marketer Reflection</h3>
+                    </div>
+                    <p class="text-xs text-slate-400">
+                        Type your chosen details below to verify your work and record them on your rotation worksheet:
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="text-slate-400 font-semibold uppercase block">1. Chosen Brand Name:</span>
+                            <input id="rec-name" type="text" oninput="updateProgressBar()" placeholder="e.g. Apex Hydration" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="text-slate-400 font-semibold uppercase block">2. Target Audience / Niche:</span>
+                            <input id="rec-audience" type="text" oninput="updateProgressBar()" placeholder="e.g. Competitive Esports Gamers" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="text-slate-400 font-semibold uppercase block">3. Unique Selling Point (USP):</span>
+                            <input id="rec-usp" type="text" oninput="updateProgressBar()" placeholder="e.g. Zero-sugar electrolyte clarity for reaction time" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
+                            <span class="text-slate-400 font-semibold uppercase block">4. Winning Tagline:</span>
+                            <input id="rec-tagline" type="text" oninput="updateProgressBar()" placeholder="e.g. Never Miss a Frame" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+
+                    <!-- Reflection Box -->
+                    <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-2">
+                        <label class="text-xs font-bold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
+                            <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-amber-400"></i> Marketer Reflection (Write on your worksheet):
+                        </label>
+                        <p class="text-xs text-slate-400">
+                            In 1&ndash;2 sentences, why would someone pay $3.50 for your brand's water instead of drinking free tap water or buying a $0.99 generic bottle?
+                        </p>
+                        <textarea id="rec-reflection" rows="2" oninput="updateProgressBar()" placeholder="Explain your perceived value story..." class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500 transition"></textarea>
+                    </div>
+                </div>
+
+                <!-- Forensic Marketing Takeaways -->
+                <div class="grid sm:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold uppercase"><i data-lucide="gem" class="w-4 h-4"></i> Perceived Value</div>
+                        <p class="text-slate-300 leading-relaxed">Customers pay for identity and status, not just the water inside the bottle.</p>
+                    </div>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold uppercase"><i data-lucide="target" class="w-4 h-4"></i> Positioning</div>
+                        <p class="text-slate-300 leading-relaxed">Targeting a specific subculture beats trying to appeal to everyone equally.</p>
+                    </div>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 space-y-1">
+                        <div class="flex items-center gap-2 text-amber-400 font-bold uppercase"><i data-lucide="bot" class="w-4 h-4"></i> AI in Marketing</div>
+                        <p class="text-slate-300 leading-relaxed">Tools like Gemini let modern marketers brainstorm and generate visual campaign mockups in seconds.</p>
+                    </div>
+                </div>
+
+                <!-- Course Registration Pitch Card -->
+                <div class="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-950 border border-amber-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <span class="text-xs font-mono uppercase text-amber-400 font-bold">Why Take High School Marketing?</span>
+                        <h4 class="text-xl font-bold text-slate-100">Marketing (MKT 215) &bull; Master Consumer Psychology &amp; Creative Strategy</h4>
+                        <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                            Learn how multi-million dollar brands are built, launch real products, create social campaigns, and harness cutting-edge AI tools to shape consumer decisions.
+                        </p>
+                    </div>
+                    <a href="../index.html" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl whitespace-nowrap transition shadow-lg shadow-amber-500/20 shrink-0 flex items-center gap-2">
+                        Back to Station Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Finish / Celebration Button -->
+                <div class="flex flex-wrap items-center justify-between pt-4 border-t border-slate-800 text-xs gap-3">
+                    <button onclick="switchPhase(1)" class="text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to The Brief
+                    </button>
+                    <button onclick="finishStation()" class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20">
+                        <i data-lucide="award" class="w-4 h-4"></i> Complete Station Activity
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-400 no-print">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>&copy; Titan School of Business &bull; Station Rotation Program</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="../index.html" class="hover:text-amber-400 transition">&larr; Return to All Stations</a>
+                <span>&bull;</span>
+                <span>7-Minute Rotation</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Script Logic -->
+    <script>
+        // Phase Navigation
+        let currentPhase = 1;
+
+        function switchPhase(phaseNum) {
+            currentPhase = phaseNum;
+
+            document.getElementById('phase-1').classList.add('hidden');
+            document.getElementById('phase-2').classList.add('hidden');
+
+            document.getElementById(`phase-${phaseNum}`).classList.remove('hidden');
+
+            for (let i = 1; i <= 2; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (i === phaseNum) {
+                    tab.className = "flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-amber-400 text-amber-400 whitespace-nowrap transition";
+                    tab.children[0].className = "w-5 h-5 rounded-full bg-amber-400/20 text-amber-400 text-xs flex items-center justify-center font-bold";
+                } else {
+                    tab.className = "flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition";
+                    tab.children[0].className = "w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold";
+                }
+            }
+
+            updateProgressBar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Copy Strategy Prompts
+        function copyPrompt(type) {
+            const el = document.getElementById(`prompt-text-${type}`);
+            const btn = document.getElementById(`btn-copy-${type}`);
+            copyTextToClipboard(el.innerText, btn, type === 'name' ? 'Copy Name Prompt' : 'Copy Tagline Prompt');
+        }
+
+        // Copy Specific Style Prompt
+        function copySpecificPrompt(elementId, btn) {
+            const text = document.getElementById(elementId).innerText;
+            const originalHTML = btn.innerHTML;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> <span class="text-emerald-400">Copied!</span>`;
+                lucide.createIcons();
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    lucide.createIcons();
+                }, 1500);
+            }).catch(() => {
+                alert("Prompt text: \n\n" + text);
+            });
+        }
+
+        // Custom Prompt Builder Logic
+        function updateBuilderPrompt() {
+            const brand = document.getElementById('builder-name').value.trim() || 'HydroPulse';
+            const tagline = document.getElementById('builder-tagline').value.trim() || 'Fuel Your Focus';
+            const container = document.getElementById('builder-container').value;
+            const vibe = document.getElementById('builder-vibe').value;
+
+            const prompt = `Generate a photorealistic commercial product photograph of a ${container} for a water brand named '${brand}' with the label displaying '${tagline}', ${vibe}, 4k advertising photography.`;
+            document.getElementById('builder-output-text').innerText = prompt;
+        }
+
+        function copyBuilderPrompt() {
+            const prompt = document.getElementById('builder-output-text').innerText;
+            const btn = document.getElementById('btn-copy-builder');
+            copyTextToClipboard(prompt, btn, 'Copy Prompt for Gemini');
+        }
+
+        function copyTextToClipboard(text, btn, originalText) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> <span class="text-emerald-400">Copied to Clipboard!</span>`;
+                lucide.createIcons();
+                setTimeout(() => {
+                    btn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>${originalText}</span>`;
+                    lucide.createIcons();
+                }, 1500);
+            }).catch(() => {
+                alert("Please copy manually:\n\n" + text);
+            });
+        }
+
+        // Progress Tracking
+        function updateProgressBar() {
+            let progress = 25; // Phase 1 default
+            if (currentPhase === 2) progress += 25;
+
+            const name = document.getElementById('rec-name')?.value.trim();
+            const audience = document.getElementById('rec-audience')?.value.trim();
+            const usp = document.getElementById('rec-usp')?.value.trim();
+            const tagline = document.getElementById('rec-tagline')?.value.trim();
+            const reflection = document.getElementById('rec-reflection')?.value.trim();
+
+            let filledCount = 0;
+            if (name) filledCount++;
+            if (audience) filledCount++;
+            if (usp) filledCount++;
+            if (tagline) filledCount++;
+            if (reflection && reflection.length > 5) filledCount += 2;
+
+            progress = Math.min(100, progress + (filledCount * 8));
+
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-percent').innerText = `${progress}%`;
+        }
+
+        // Finish Activity
+        function finishStation() {
+            pauseTimer();
+            document.getElementById('progress-bar').style.width = '100%';
+            document.getElementById('progress-percent').innerText = '100%';
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+            alert("Awesome work! Make sure your brand concept and reflection are recorded on your rotation sheet, then return to the Station Menu.");
+        }
+
+        // Timer Logic
+        let timerSeconds = 420; // 7 Minutes
+        let timerInterval = null;
+        let timerRunning = false;
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                document.getElementById('timer-play-icon').setAttribute('data-lucide', 'pause');
+                lucide.createIcons();
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        pauseTimer();
+                        alert("7 minutes are up! Wrap up your Gemini mockup and record your reflection.");
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('timer-play-icon').setAttribute('data-lucide', 'play');
+            lucide.createIcons();
+        }
+
+        function toggleTimer() {
+            if (timerRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 420;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timer-display').innerText =
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        window.onload = function () {
+            lucide.createIcons();
+            startTimer();
+            updateProgressBar();
+            updateBuilderPrompt();
+        };
+    </script>
+</body>
+</html>

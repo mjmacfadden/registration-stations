@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrepreneurship Micro-Case Study: The $50 Million Pitch</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti for Completion -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Shared Titan School of Business theme & styles -->
+    <script src="../assets/theme.js"></script>
+    <link rel="stylesheet" href="../assets/common.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-slate-950">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+
+            <!-- Branding -->
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400 hover:bg-amber-500/20 transition shrink-0" title="Back to Titan School of Business">
+                    <i data-lucide="rocket" class="w-6 h-6"></i>
+                </a>
+                <div>
+                    <a href="../index.html" class="text-xs font-semibold uppercase tracking-wider text-amber-400 hover:text-amber-300 transition">Titan School of Business</a>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500"> • ENTR 220 • Opportunity Lab</span>
+                    <h1 class="text-lg font-bold text-slate-100 leading-tight">The $50 Million Pitch</h1>
+                </div>
+            </div>
+
+            <!-- Timer Widget -->
+            <div class="flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
+                <i data-lucide="clock" class="w-4 h-4 text-amber-400 animate-pulse"></i>
+                <div class="text-xl font-mono font-bold text-amber-400 tracking-wider" id="timer-display">07:00</div>
+                <div class="flex items-center gap-1 border-l border-slate-800 pl-3">
+                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Play/Pause Timer">
+                        <i data-lucide="play" id="timer-play-icon" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Reset Timer">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Controls (Progress & Theme) -->
+            <div class="flex items-center gap-3">
+                <!-- Progress Tracker -->
+                <div class="flex items-center gap-2 text-xs">
+                    <span class="text-slate-400 font-medium">Progress:</span>
+                    <div class="w-28 sm:w-32 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700/50">
+                        <div id="progress-bar" class="bg-gradient-to-r from-amber-500 to-amber-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                    <span id="progress-percent" class="text-amber-400 font-mono font-semibold">0%</span>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" id="theme-toggle-btn" class="px-2.5 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-slate-100 transition flex items-center gap-1.5 text-xs font-medium shrink-0" title="Switch Theme">
+                    <i data-lucide="sun" id="theme-toggle-icon" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span id="theme-toggle-label">Light View</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Phase Navigation Tabs -->
+        <div class="flex border-b border-slate-800 mb-8 no-print overflow-x-auto">
+            <button id="tab-1" onclick="switchPhase(1)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-amber-400 text-amber-400 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-amber-400/20 text-amber-400 text-xs flex items-center justify-center font-bold">1</span>
+                Phase 1: The Pitch (1m)
+            </button>
+            <button id="tab-2" onclick="switchPhase(2)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold">2</span>
+                Phase 2: You Be The CEO (3m)
+            </button>
+            <button id="tab-3" onclick="switchPhase(3)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold">3</span>
+                Phase 3: Tomorrow's Blockbuster (3m)
+            </button>
+        </div>
+
+        <!-- PHASE 1: THE PITCH (CASE BRIEF) -->
+        <section id="phase-1" class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6">
+                    <div>
+                        <span class="inline-block px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded text-xs font-mono uppercase mb-2">
+                            Real Pitch Meeting: Dallas, Texas, 2000
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 serif">Netflix Tries to Sell Itself to Blockbuster</h2>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Asking Price</span>
+                        <span class="text-2xl font-bold font-mono text-emerald-400">$50,000,000</span>
+                    </div>
+                </div>
+
+                <!-- Case File Details Grid -->
+                <div class="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-2 text-amber-400 font-semibold mb-1">
+                            <i data-lucide="rocket" class="w-4 h-4"></i> The Startup
+                        </div>
+                        <p class="text-slate-200 font-medium">Netflix (Reed Hastings & Marc Randolph)</p>
+                        <p class="text-xs text-slate-400">Small DVD-by-mail company, ~$5M annual revenue, losing money</p>
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-2 text-sky-400 font-semibold mb-1">
+                            <i data-lucide="building-2" class="w-4 h-4"></i> The Giant
+                        </div>
+                        <p class="text-slate-200 font-medium">Blockbuster Inc. (CEO John Antioco)</p>
+                        <p class="text-xs text-slate-400">~9,000 stores nationwide, roughly $5 billion in annual revenue</p>
+                    </div>
+                </div>
+
+                <!-- Narrative Brief -->
+                <div class="space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base">
+                    <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-5 h-5 text-amber-400"></i> Statement of Facts
+                    </h3>
+                    <p>
+                        In 2000, fresh off the dot-com crash, tiny DVD-by-mail startup Netflix was burning cash and struggling to raise money. Co-founders Reed Hastings and Marc Randolph flew to Blockbuster's Dallas headquarters with a proposal: Netflix would run Blockbuster's online brand and operations, while Blockbuster promoted Netflix inside its thousands of physical stores.
+                    </p>
+                    <p>
+                        The asking price for the partnership was <strong class="text-amber-300">$50 million</strong> &mdash; a figure Blockbuster, with billions in annual revenue and a dominant nationwide store footprint, could easily afford.
+                    </p>
+
+                    <!-- Breakdown Box -->
+                    <div class="bg-slate-950 border-l-4 border-amber-500 p-4 rounded-r-xl my-4 space-y-2">
+                        <h4 class="font-bold text-slate-100 text-sm uppercase tracking-wider text-amber-400">The Size Mismatch:</h4>
+                        <ul class="list-disc list-inside text-xs sm:text-sm text-slate-300 space-y-1 font-mono">
+                            <li><strong class="text-slate-100">~$5 million</strong> Netflix's total annual revenue in 2000.</li>
+                            <li><strong class="text-slate-100">~$5 billion</strong> Blockbuster's annual revenue &mdash; roughly 1,000x larger.</li>
+                            <li><strong class="text-slate-100">9,000+</strong> Blockbuster physical retail stores nationwide.</li>
+                            <li><strong class="text-slate-100">$50 million</strong> Netflix's asking price for the entire partnership.</li>
+                        </ul>
+                    </div>
+
+                    <p class="text-xs text-slate-400 italic">
+                        Blockbuster's leadership reportedly viewed Netflix's online, no-late-fee subscription model as a tiny, unprofitable niche business unworthy of serious attention.
+                    </p>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button onclick="switchPhase(2)" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20">
+                        Proceed to Phase 2: You Be The CEO <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 2: YOU BE THE CEO (INTERACTIVE QUIZ) -->
+        <section id="phase-2" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+                <div class="border-b border-slate-800 pb-4 mb-6">
+                    <span class="text-xs font-mono uppercase text-amber-400">Interactive Strategic Deliberation</span>
+                    <h2 class="text-2xl font-extrabold text-slate-100">Examine the Opportunity Recognition Questions</h2>
+                    <p class="text-slate-400 text-sm mt-1">Select your answer for each question to see how real entrepreneurs and incumbents reason about disruptive threats.</p>
+                </div>
+
+                <div class="space-y-8" id="quiz-container">
+
+                    <!-- Question 1 -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-5 sm:p-6 rounded-xl space-y-4" id="q1-box">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">1</span>
+                                Why might a dominant, highly profitable incumbent dismiss a tiny startup's new business model?
+                            </h3>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="answerQuestion(1, 'A')" id="q1-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>A) Large, successful companies always re-evaluate their entire business model the moment any new competitor appears.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(1, 'B')" id="q1-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>B) Incumbents often discount threats that don't fit their current, highly profitable model &mdash; until the threat is too big to ignore.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                        </div>
+                        <div id="q1-feedback" class="hidden p-4 rounded-lg text-sm mt-3 space-y-1"></div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-5 sm:p-6 rounded-xl space-y-4" id="q2-box">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">2</span>
+                                What is the business theory that describes small, low-end innovations eventually overtaking profitable incumbents?
+                            </h3>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="answerQuestion(2, 'A')" id="q2-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>A) Economies of Scale</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(2, 'B')" id="q2-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>B) Disruptive Innovation</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                        </div>
+                        <div id="q2-feedback" class="hidden p-4 rounded-lg text-sm mt-3 space-y-1"></div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-5 sm:p-6 rounded-xl space-y-4" id="q3-box">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">3</span>
+                                What do you predict happened to both companies over the next 10-15 years?
+                            </h3>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="answerQuestion(3, 'A')" id="q3-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>A) Netflix eventually ran out of money, and Blockbuster safely remained the category leader for decades.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(3, 'B')" id="q3-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>B) Netflix pivoted to streaming and became a $150+ billion company; Blockbuster filed for bankruptcy in 2010.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                        </div>
+                        <div id="q3-feedback" class="hidden p-4 rounded-lg text-sm mt-3 space-y-1"></div>
+                    </div>
+
+                </div>
+
+                <div class="mt-8 flex justify-between items-center border-t border-slate-800 pt-6">
+                    <button onclick="switchPhase(1)" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium rounded-xl text-sm transition">
+                        Back to the Pitch
+                    </button>
+                    <button id="to-phase-3-btn" onclick="switchPhase(3)" disabled class="px-6 py-3 bg-amber-500/50 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition cursor-not-allowed">
+                        Unlock Phase 3: Tomorrow's Blockbuster <i data-lucide="lock" id="lock-icon" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHASE 3: THE REAL OUTCOME & BUSINESS REALITY -->
+        <section id="phase-3" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+
+                <div class="border-b border-slate-800 pb-4">
+                    <span class="text-xs font-mono uppercase text-amber-400">What Actually Happened Next</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 serif">From Laughed Out of the Room to a $150 Billion Company</h2>
+                </div>
+
+                <!-- Outcome Summary Cards -->
+                <div class="grid md:grid-cols-2 gap-4">
+
+                    <!-- The Deal Card -->
+                    <div class="bg-slate-950/80 p-5 rounded-xl border border-slate-800 space-y-3">
+                        <div class="flex items-center gap-2 text-emerald-400 font-bold text-base">
+                            <i data-lucide="x-circle" class="w-5 h-5"></i> Blockbuster Passed on the Deal
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Confident in its thousands of stores and profitable late-fee revenue model, Blockbuster declined the partnership. Netflix kept growing, eventually eliminating late fees entirely &mdash; directly solving customers' #1 complaint about Blockbuster.
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs text-amber-300 italic">
+                            Netflix pivoted hard into streaming starting in 2007, years ahead of most competitors.
+                        </div>
+                    </div>
+
+                    <!-- Small Business Impact Card -->
+                    <div class="bg-slate-950/80 p-5 rounded-xl border border-rose-900/40 space-y-3">
+                        <div class="flex items-center gap-2 text-rose-400 font-bold text-base">
+                            <i data-lucide="alert-triangle" class="w-5 h-5"></i> The Business Reality
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Blockbuster filed for bankruptcy in <strong>September 2010</strong>, crushed by debt, store leases, and its failure to adapt. Only a single corporate-owned store remains today, run as a novelty. Netflix is now valued at over <strong>$150 billion</strong>.
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs text-rose-300">
+                            <strong>Aftermath:</strong> This story is now a textbook example of the Innovator's Dilemma in entrepreneurship and strategy courses worldwide.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- The Final Step: Student Predictions & Google Form Submission -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
+                    <div class="border-b border-slate-800 pb-4">
+                        <span class="text-xs font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
+                            <i data-lucide="zap" class="w-4 h-4"></i> Final Step &bull; Venture Strategy
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-slate-100 mt-1">
+                            Who Is Tomorrow's Blockbuster?
+                        </h3>
+                        <p class="text-slate-400 text-sm mt-1 leading-relaxed">
+                            Blockbuster failed because leadership couldn't imagine a world where customers wouldn't drive to physical stores and pay late fees. As an entrepreneur, your job is to spot these blind spots before everyone else does.
+                        </p>
+                    </div>
+
+                    <!-- Prompt Instruction -->
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <h4 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                            <i data-lucide="target" class="w-4 h-4 text-emerald-400"></i> The Final Challenge:
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Predict <strong class="text-amber-300">one major business or industry today</strong> that is currently facing a disruptive threat (or changing consumer habits) that leadership is failing to properly assess.
+                        </p>
+                    </div>
+
+                    <!-- Brainstorming Sparks / Thought Starters -->
+                    <div class="space-y-2">
+                        <span class="text-[0.7rem] uppercase tracking-wider text-slate-400 font-bold font-mono">Industry Thought-Starters (Click any card to load inspiration):</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                            <button onclick="fillIdea('Traditional Movie Theaters', 'Direct-to-consumer home streaming & 4K laser projectors', 'Relying on overpriced concessions and ticket exclusivity while attendance drops')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                                <span class="font-bold block text-slate-100">Movie Theaters</span>
+                                <span class="text-[0.65rem] text-slate-400">vs. Home streaming</span>
+                            </button>
+                            <button onclick="fillIdea('Cable TV Networks', 'Creator platforms (YouTube, TikTok, Twitch) & a la carte apps', 'Assuming older audiences won\'t cut the cord on expensive $150/mo bundles')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                                <span class="font-bold block text-slate-100">Cable TV</span>
+                                <span class="text-[0.65rem] text-slate-400">vs. Creator platforms</span>
+                            </button>
+                            <button onclick="fillIdea('Traditional Car Dealerships', 'Direct online ordering with transparent fixed pricing (Tesla/Rivian)', 'Believing buyers prefer aggressive salesperson negotiations over 1-click apps')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                                <span class="font-bold block text-slate-100">Car Dealerships</span>
+                                <span class="text-[0.65rem] text-slate-400">vs. Direct-to-consumer</span>
+                            </button>
+                            <button onclick="fillIdea('Traditional Search Engines', 'Conversational AI answering engines giving direct answers', 'Protecting ad-link revenue models instead of rethinking how people find info')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                                <span class="font-bold block text-slate-100">Search Engines</span>
+                                <span class="text-[0.65rem] text-slate-400">vs. Conversational AI</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Draft Prediction Card -->
+                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                            <span class="text-xs font-mono uppercase text-slate-400 font-bold">Draft Your Prediction:</span>
+                            <span class="text-xs text-amber-400 flex items-center gap-1.5 font-medium">
+                                <i data-lucide="clipboard-pen-line" class="w-3.5 h-3.5"></i> Submit via Google Form below
+                            </span>
+                        </div>
+
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <label class="text-slate-300 font-semibold block mb-1">1. Company or Industry Under Threat Today:</label>
+                                <input id="pred-company" type="text" oninput="updatePredictionDraft()" placeholder="e.g. Traditional Movie Theaters, Legacy Cable TV, Gas Stations, Fast Fashion..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="text-slate-300 font-semibold block mb-1">2. The Emerging Disruptive Threat or Technology:</label>
+                                <input id="pred-threat" type="text" oninput="updatePredictionDraft()" placeholder="e.g. Day-and-date 4K streaming releases, creator video platforms, EV home charging..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="text-slate-300 font-semibold block mb-1">3. The Leadership Blind Spot (Why are they underestimating it?):</label>
+                                <textarea id="pred-blindspot" rows="2" oninput="updatePredictionDraft()" placeholder="e.g. They assume customers will always prefer their legacy experience and ignore how fast habits change..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Action Bar: Google Form Button + Copy Response -->
+                        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
+                            <button onclick="copyPredictionText()" id="btn-copy-pred" class="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Prediction Draft</span>
+                            </button>
+
+                            <a id="btn-google-form" href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/20">
+                                <i data-lucide="external-link" class="w-4 h-4"></i> Submit to Google Form
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Instructor Configuration Note -->
+                    <p class="text-[0.7rem] text-slate-500 italic text-center">
+                        Instructor: Set your Google Form link in the script configuration variable <code>GOOGLE_FORM_URL</code>.
+                    </p>
+                </div>
+
+                <!-- Course Registration Pitch Card -->
+                <div class="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-950 border border-amber-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <span class="text-xs font-mono uppercase text-amber-400 font-bold">Why Take High School Entrepreneurship?</span>
+                        <h4 class="text-xl font-bold text-slate-100">Entrepreneurship (ENTR 220) &bull; Build the Future</h4>
+                        <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                            Learn how to spot overlooked opportunities, build scalable business models, pitch investors, and launch real ventures before established giants even see you coming.
+                        </p>
+                    </div>
+                    <a href="../index.html" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl whitespace-nowrap transition shadow-lg shadow-amber-500/20 shrink-0 flex items-center gap-2">
+                        Back to Station Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Finish / Action Controls -->
+                <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
+                    <button onclick="switchPhase(2)" class="text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Deliberation
+                    </button>
+                    <button onclick="completeLab()" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-400 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-emerald-500/20">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Mark Station Complete
+                    </button>
+                </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-400 no-print">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p><a href="../index.html" class="text-amber-400 hover:text-amber-300 font-semibold transition">&larr; Titan School of Business</a> • Blockbuster vs. Netflix (2000) Analysis</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span>Self-Directed (7 Min)</span>
+                <span>•</span>
+                <span>Opportunity Recognition & Innovation</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // ======= CONFIGURATION =======
+        // Instructor: Paste your Google Form URL here so students can submit their predictions directly!
+        const GOOGLE_FORM_URL = "https://forms.google.com";
+
+        // State Variables
+        let timerSeconds = 420; // 7 Minutes
+        let timerInterval = null;
+        let timerRunning = false;
+        let currentPhase = 1;
+        let userAnswers = { 1: null, 2: null, 3: null };
+        let correctAnswers = { 1: 'B', 2: 'B', 3: 'B' };
+
+        // Initialize Icons & App on Load
+        window.onload = function() {
+            lucide.createIcons();
+            startTimer();
+            updateProgressBar();
+
+            // Set Google Form link
+            const formBtn = document.getElementById('btn-google-form');
+            if (formBtn && GOOGLE_FORM_URL) {
+                formBtn.href = GOOGLE_FORM_URL;
+            }
+        };
+
+        // Timer Logic
+        function startTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                document.getElementById('timer-play-icon').setAttribute('data-lucide', 'pause');
+                lucide.createIcons();
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        pauseTimer();
+                        alert("7 minutes are up! Submit your disruption prediction and wrap up.");
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('timer-play-icon').setAttribute('data-lucide', 'play');
+            lucide.createIcons();
+        }
+
+        function toggleTimer() {
+            if (timerRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 420;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timer-display').innerText =
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Phase Navigation
+        function switchPhase(phase) {
+            document.getElementById('phase-1').classList.add('hidden');
+            document.getElementById('phase-2').classList.add('hidden');
+            document.getElementById('phase-3').classList.add('hidden');
+
+            for (let i = 1; i <= 3; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                tab.className = "flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition";
+            }
+
+            document.getElementById(`phase-${phase}`).classList.remove('hidden');
+            const activeTab = document.getElementById(`tab-${phase}`);
+            activeTab.className = "flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-amber-400 text-amber-400 whitespace-nowrap transition";
+
+            currentPhase = phase;
+            updateProgressBar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Quiz Handling
+        function answerQuestion(qNum, option) {
+            userAnswers[qNum] = option;
+            const isCorrect = option === correctAnswers[qNum];
+
+            const optA = document.getElementById(`q${qNum}-opt-A`);
+            const optB = document.getElementById(`q${qNum}-opt-B`);
+            const feedback = document.getElementById(`q${qNum}-feedback`);
+
+            [optA, optB].forEach(btn => {
+                btn.className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-sm transition flex items-center justify-between";
+            });
+
+            const selectedBtn = document.getElementById(`q${qNum}-opt-${option}`);
+            if (isCorrect) {
+                selectedBtn.className = "w-full text-left p-3.5 rounded-lg border border-emerald-500/50 bg-emerald-950/20 text-emerald-300 text-sm font-medium flex items-center justify-between";
+            } else {
+                selectedBtn.className = "w-full text-left p-3.5 rounded-lg border border-rose-500/50 bg-rose-950/20 text-rose-300 text-sm font-medium flex items-center justify-between";
+            }
+
+            feedback.classList.remove('hidden');
+            if (qNum === 1) {
+                feedback.className = "p-4 rounded-lg text-xs border bg-slate-900 text-slate-300 border-slate-800";
+                feedback.innerHTML = `<strong>Strategic Rule:</strong> <span class="text-amber-400 font-semibold">Incumbent inertia</span> causes profitable leaders to discount small-scale threats that don't match their existing business model &mdash; until it's too late to respond.`;
+            } else if (qNum === 2) {
+                feedback.className = "p-4 rounded-lg text-xs border bg-slate-900 text-slate-300 border-slate-800";
+                feedback.innerHTML = `<strong>Theory:</strong> This is <span class="text-amber-400 font-semibold">Disruptive Innovation</span> (Clayton Christensen) &mdash; cheaper, simpler innovations start in overlooked niches and eventually move upmarket to overtake industry leaders.`;
+            } else if (qNum === 3) {
+                feedback.className = "p-4 rounded-lg text-xs border bg-slate-900 text-slate-300 border-slate-800";
+                feedback.innerHTML = `<strong>Real Outcome:</strong> Netflix pivoted to streaming and is now worth over $150 billion. Blockbuster, unable to adapt, filed for bankruptcy in 2010 and shut down almost all of its stores.`;
+            }
+
+            checkQuizCompletion();
+            updateProgressBar();
+        }
+
+        function checkQuizCompletion() {
+            const allAnswered = userAnswers[1] && userAnswers[2] && userAnswers[3];
+            const toPhase3Btn = document.getElementById('to-phase-3-btn');
+            const lockIcon = document.getElementById('lock-icon');
+
+            if (allAnswered) {
+                toPhase3Btn.disabled = false;
+                toPhase3Btn.className = "px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20 cursor-pointer";
+                if (lockIcon) lockIcon.setAttribute('data-lucide', 'arrow-right');
+                lucide.createIcons();
+            }
+        }
+
+        // Thought-Starter Quick Fill
+        function fillIdea(company, threat, blindspot) {
+            document.getElementById('pred-company').value = company;
+            document.getElementById('pred-threat').value = threat;
+            document.getElementById('pred-blindspot').value = blindspot;
+            updatePredictionDraft();
+        }
+
+        function updatePredictionDraft() {
+            updateProgressBar();
+        }
+
+        // Copy Prediction Draft to Clipboard
+        function copyPredictionText() {
+            const company = document.getElementById('pred-company').value.trim() || '[Company / Industry]';
+            const threat = document.getElementById('pred-threat').value.trim() || '[Disruptive Threat]';
+            const blindspot = document.getElementById('pred-blindspot').value.trim() || '[Leadership Blind Spot]';
+
+            const text = `DISRUPTIVE THREAT PREDICTION:\nCompany/Industry Under Threat: ${company}\nEmerging Disruptive Threat: ${threat}\nLeadership Blind Spot: ${blindspot}`;
+
+            const btn = document.getElementById('btn-copy-pred');
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> <span class="text-emerald-400">Copied to Clipboard!</span>`;
+                lucide.createIcons();
+                setTimeout(() => {
+                    btn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Prediction Draft</span>`;
+                    lucide.createIcons();
+                }, 1500);
+            }).catch(() => {
+                alert("Please copy manually:\n\n" + text);
+            });
+        }
+
+        // Progress Calculation
+        function updateProgressBar() {
+            let progress = 0;
+
+            if (currentPhase >= 1) progress += 25;
+
+            let answeredCount = 0;
+            for (let q in userAnswers) {
+                if (userAnswers[q]) answeredCount++;
+            }
+            progress += (answeredCount / 3) * 45;
+
+            if (currentPhase === 3) progress += 15;
+
+            const company = document.getElementById('pred-company')?.value.trim();
+            const threat = document.getElementById('pred-threat')?.value.trim();
+            if (company || threat) progress += 15;
+
+            progress = Math.min(100, Math.round(progress));
+
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-percent').innerText = `${progress}%`;
+        }
+
+        // Complete Station
+        function completeLab() {
+            pauseTimer();
+            document.getElementById('progress-bar').style.width = '100%';
+            document.getElementById('progress-percent').innerText = '100%';
+
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            alert("Outstanding strategic thinking! Be sure to submit your prediction on the Google Form (or record it on your worksheet), then return to the Station Menu.");
+        }
+
+        function restartCaseStudy() {
+            userAnswers = { 1: null, 2: null, 3: null };
+            document.getElementById('pred-company').value = "";
+            document.getElementById('pred-threat').value = "";
+            document.getElementById('pred-blindspot').value = "";
+
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`q${i}-opt-A`).className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-sm transition flex items-center justify-between";
+                document.getElementById(`q${i}-opt-B`).className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-sm transition flex items-center justify-between";
+                document.getElementById(`q${i}-feedback`).classList.add('hidden');
+            }
+
+            const toPhase3Btn = document.getElementById('to-phase-3-btn');
+            toPhase3Btn.disabled = true;
+            toPhase3Btn.className = "px-6 py-3 bg-amber-500/50 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition cursor-not-allowed";
+
+            resetTimer();
+            switchPhase(1);
+        }
+    </script>
+</body>
+</html>

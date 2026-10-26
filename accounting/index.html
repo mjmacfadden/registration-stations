@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forensic Accounting Micro-Lab: The Year-Long Skimming Operation</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Canvas Confetti for Completion -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Shared Titan School of Business theme & styles -->
+    <script src="../assets/theme.js"></script>
+    <link rel="stylesheet" href="../assets/common.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-slate-950">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+
+            <!-- Branding -->
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400 hover:bg-amber-500/20 transition shrink-0" title="Back to Titan School of Business">
+                    <i data-lucide="calculator" class="w-6 h-6"></i>
+                </a>
+                <div>
+                    <a href="../index.html" class="text-xs font-semibold uppercase tracking-wider text-amber-400 hover:text-amber-300 transition">Titan School of Business</a>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500"> &bull; ACCT 150 &bull; Forensic Audit Lab</span>
+                    <h1 class="text-lg font-bold text-slate-100 leading-tight">The Year-Long Skimming Operation</h1>
+                </div>
+            </div>
+
+            <!-- Timer Widget -->
+            <div class="flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
+                <i data-lucide="clock" class="w-4 h-4 text-amber-400 animate-pulse"></i>
+                <div class="text-xl font-mono font-bold text-amber-400 tracking-wider" id="timer-display">07:00</div>
+                <div class="flex items-center gap-1 border-l border-slate-800 pl-3">
+                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Play/Pause Timer">
+                        <i data-lucide="play" id="timer-play-icon" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Reset Timer">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Controls (Progress & Theme) -->
+            <div class="flex items-center gap-3">
+                <!-- Progress Tracker -->
+                <div class="flex items-center gap-2 text-xs">
+                    <span class="text-slate-400 font-medium">Progress:</span>
+                    <div class="w-28 sm:w-32 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700/50">
+                        <div id="progress-bar" class="bg-gradient-to-r from-amber-500 to-amber-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                    <span id="progress-percent" class="text-amber-400 font-mono font-semibold">0%</span>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" id="theme-toggle-btn" class="px-2.5 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-slate-100 transition flex items-center gap-1.5 text-xs font-medium shrink-0" title="Switch Theme">
+                    <i data-lucide="sun" id="theme-toggle-icon" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span id="theme-toggle-label">Light View</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Phase Navigation Tabs -->
+        <div class="flex border-b border-slate-800 mb-8 no-print overflow-x-auto">
+            <button id="tab-1" onclick="switchPhase(1)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-amber-400 text-amber-400 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-amber-400/20 text-amber-400 text-xs flex items-center justify-center font-bold">1</span>
+                Phase 1: The Case &amp; Evidence (1m)
+            </button>
+            <button id="tab-2" onclick="switchPhase(2)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold">2</span>
+                Phase 2: Detective Audit (4m)
+            </button>
+            <button id="tab-3" onclick="switchPhase(3)" class="flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold">3</span>
+                Phase 3: Audit Verdict (2m)
+            </button>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- PHASE 1: THE CASE & FINANCIAL EVIDENCE     -->
+        <!-- ========================================== -->
+        <section id="phase-1" class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+                <!-- Case Header Banner -->
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6">
+                    <div>
+                        <span class="inline-block px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded text-xs font-mono uppercase mb-2">
+                            Audit Case File: WHS-2026-ACT
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 serif">West High Concession Stand Skim</h2>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-slate-400 block">Reported Net Profit</span>
+                        <span class="text-2xl font-bold font-mono text-amber-400">+$500.00</span>
+                        <span class="text-[0.65rem] text-rose-400 font-semibold block uppercase tracking-wider">&uarr; Suspiciously Low</span>
+                    </div>
+                </div>
+
+                <!-- Case File Details Grid -->
+                <div class="grid sm:grid-cols-2 gap-4 mb-6 text-sm">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-2 text-amber-400 font-semibold mb-1">
+                            <i data-lucide="user-x" class="w-4 h-4"></i> Suspect Under Audit
+                        </div>
+                        <p class="text-slate-200 font-medium">Marcus (Student Council President)</p>
+                        <p class="text-xs text-slate-400">Sole overseer of all cash operations for Football, Basketball, &amp; Track concessions.</p>
+                    </div>
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <div class="flex items-center gap-2 text-emerald-400 font-semibold mb-1">
+                            <i data-lucide="search" class="w-4 h-4"></i> Forensic Investigator
+                        </div>
+                        <p class="text-slate-200 font-medium">You (Forensic Accounting Student)</p>
+                        <p class="text-xs text-slate-400">West High Internal Audit Task Force &bull; ACCT 150</p>
+                    </div>
+                </div>
+
+                <!-- Narrative Brief -->
+                <div class="space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base">
+                    <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-5 h-5 text-amber-400"></i> The Scenario
+                    </h3>
+                    <p>
+                        Throughout the school year, Marcus served as Student Council President and oversaw all cash operations for the Friday Night Concession Stand across Football, Basketball, and Track meets.
+                    </p>
+                    <p>
+                        At year-end, the school treasurer noticed that despite <strong class="text-amber-300">record-breaking attendance and sell-out crowds</strong>, the concession account barely broke even. Marcus claims that exorbitant supply costs, broken equipment, and frequent food spoilage consumed all the profits.
+                    </p>
+                    <p>
+                        An audit of the <strong class="text-slate-100">Annual Concession Stand Statement of Cash Flows</strong> tells a very different story. Your goal: examine the cash flow statement to uncover how Marcus systematically skimmed cash into his personal pocket over the past 10 months.
+                    </p>
+                </div>
+
+                <!-- Financial Statement Evidence Container -->
+                <div class="mt-8 border-t border-slate-800 pt-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <div>
+                            <span class="text-xs font-mono uppercase text-amber-400">Exhibition A &bull; Financial Evidence</span>
+                            <h3 class="text-xl font-bold text-slate-100">Annual Statement of Cash Flows</h3>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleDocFullscreen()" id="btn-top-fullscreen" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 flex items-center gap-1.5 transition shadow-sm" title="Expand Google Doc to Full Screen">
+                                <i data-lucide="maximize-2" id="top-fullscreen-icon" class="w-3.5 h-3.5"></i> <span id="top-doc-fullscreen-text">Full Screen</span>
+                            </button>
+                            <a href="https://docs.google.com/document/d/e/2PACX-1vS_c0Oz_30agFglvmMN-yoxNtj4uVA0Bs4zIrH8ExFHB15R9v57GdnG313JPMaT0lSkPGObeaGDmzb1/pub" target="_blank" rel="noopener" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 flex items-center gap-1.5 transition" title="Open Google Doc in new window">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Open in New Tab
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- View Mode Toggle: Embedded Doc vs Interactive Audit View -->
+                    <div class="flex items-center gap-2 mb-4 bg-slate-950 p-1.5 rounded-xl border border-slate-800 w-fit">
+                        <button onclick="setStatementView('doc')" id="btn-view-doc" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition flex items-center gap-1.5">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Embedded Google Doc
+                        </button>
+                        <button onclick="setStatementView('interactive')" id="btn-view-interactive" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                            <i data-lucide="table" class="w-3.5 h-3.5"></i> Interactive Audit View
+                        </button>
+                    </div>
+
+                    <!-- Embedded Google Doc View (Default) -->
+                    <div id="view-doc" class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden shadow-inner transition-all duration-200">
+                        <div class="bg-slate-900 px-4 py-2 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 shrink-0">
+                            <span class="flex items-center gap-1.5"><i data-lucide="file-check" class="w-3.5 h-3.5 text-emerald-400"></i> Official Published Document</span>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleDocFullscreen()" id="btn-doc-fullscreen" class="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 flex items-center gap-1.5 transition text-[0.75rem] font-medium" title="Toggle Fullscreen">
+                                    <i data-lucide="maximize" id="doc-fullscreen-icon" class="w-3.5 h-3.5"></i> <span id="doc-fullscreen-text">Full Screen</span>
+                                </button>
+                                <span class="font-mono text-[0.7rem] text-slate-500 hidden sm:inline">docs.google.com/document/pub</span>
+                            </div>
+                        </div>
+                        <iframe 
+                            id="doc-iframe"
+                            src="https://docs.google.com/document/d/e/2PACX-1vS_c0Oz_30agFglvmMN-yoxNtj4uVA0Bs4zIrH8ExFHB15R9v57GdnG313JPMaT0lSkPGObeaGDmzb1/pub?embedded=true" 
+                            class="w-full h-[520px] bg-white border-0 transition-all duration-200" 
+                            title="Official Concession Stand Statement of Cash Flows">
+                        </iframe>
+                    </div>
+
+                    <!-- Interactive Audit View -->
+                    <div id="view-interactive" class="hidden bg-slate-950 border border-slate-800 rounded-xl overflow-hidden shadow-inner">
+                        <div class="p-4 sm:p-5 border-b border-slate-800 bg-slate-900/60 text-center">
+                            <h4 class="font-extrabold text-slate-100 text-base sm:text-lg tracking-wide uppercase">West High School Student Council</h4>
+                            <p class="text-xs font-semibold text-amber-400">Concession Stand Account &bull; Statement of Cash Flows</p>
+                            <p class="text-[0.7rem] text-slate-400 font-mono mt-0.5">For the Fiscal Year Ended May 31, 2026 (Audited)</p>
+                        </div>
+
+                        <div class="p-4 sm:p-6 space-y-6 text-xs sm:text-sm font-mono">
+
+                            <!-- Operating Activities -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-slate-400 uppercase font-sans font-bold text-xs tracking-wider">
+                                    <span class="text-sky-400 flex items-center gap-1.5"><i data-lucide="activity" class="w-3.5 h-3.5"></i> 1. Operating Activities (Daily Sales &amp; Supplies)</span>
+                                    <span>Amount</span>
+                                </div>
+                                <div class="flex justify-between py-1 text-slate-300">
+                                    <span>Gross Cash Receipts from Game Day Food &amp; Beverage Sales</span>
+                                    <span class="text-emerald-400 font-semibold">+$34,000</span>
+                                </div>
+                                <div class="flex justify-between py-1 text-slate-300">
+                                    <span>Less: Payments to Primary Wholesale Snack Suppliers</span>
+                                    <span class="text-slate-400">$(14,000)</span>
+                                </div>
+                                <div class="flex justify-between py-1 bg-amber-500/10 px-2 rounded border border-amber-500/30 text-amber-300">
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                                        Less: Petty Cash / Unverified "Emergency Grocery Purchases"
+                                        <span class="text-[0.65rem] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-400 font-bold">[1]</span>
+                                    </span>
+                                    <span class="font-bold text-rose-400">$(5,000)</span>
+                                </div>
+                                <div class="flex justify-between py-1 bg-amber-500/10 px-2 rounded border border-amber-500/30 text-amber-300">
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                                        Less: Customer Cash Refunds for "Spoiled/Damaged Goods"
+                                        <span class="text-[0.65rem] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-400 font-bold">[2]</span>
+                                    </span>
+                                    <span class="font-bold text-rose-400">$(3,500)</span>
+                                </div>
+                                <div class="flex justify-between pt-1 border-t border-slate-800 font-bold text-slate-200">
+                                    <span class="font-sans">Net Cash Provided by Operating Activities</span>
+                                    <span class="text-emerald-400">+$11,500</span>
+                                </div>
+                            </div>
+
+                            <!-- Investing Activities -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-slate-400 uppercase font-sans font-bold text-xs tracking-wider">
+                                    <span class="text-purple-400 flex items-center gap-1.5"><i data-lucide="wrench" class="w-3.5 h-3.5"></i> 2. Investing Activities (Equipment &amp; Hardware)</span>
+                                    <span>Amount</span>
+                                </div>
+                                <div class="flex justify-between py-1 text-slate-300">
+                                    <span>Capital Expenditure: Commercial-Grade Popcorn Machine</span>
+                                    <span class="text-slate-400">$(2,000)</span>
+                                </div>
+                                <div class="flex justify-between py-1 bg-amber-500/10 px-2 rounded border border-amber-500/30 text-amber-300">
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                                        Proceeds from Unauthorized Liquidation of Square POS Readers
+                                        <span class="text-[0.65rem] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-400 font-bold">[3]</span>
+                                    </span>
+                                    <span class="font-bold text-emerald-400">+$1,000</span>
+                                </div>
+                                <div class="flex justify-between pt-1 border-t border-slate-800 font-bold text-slate-200">
+                                    <span class="font-sans">Net Cash Used in Investing Activities</span>
+                                    <span class="text-rose-400">$(1,000)</span>
+                                </div>
+                            </div>
+
+                            <!-- Financing Activities -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-slate-400 uppercase font-sans font-bold text-xs tracking-wider">
+                                    <span class="text-emerald-400 flex items-center gap-1.5"><i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i> 3. Financing Activities &amp; Dispositions</span>
+                                    <span>Amount</span>
+                                </div>
+                                <div class="flex justify-between py-1 bg-amber-500/10 px-2 rounded border border-amber-500/30 text-amber-300">
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                                        Unauthorized Stipend: "Cash Security &amp; Transport Allowance"
+                                        <span class="text-[0.65rem] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-400 font-bold">[4]</span>
+                                    </span>
+                                    <span class="font-bold text-rose-400">$(4,000)</span>
+                                </div>
+                                <div class="flex justify-between py-1 bg-amber-500/10 px-2 rounded border border-amber-500/30 text-amber-300">
+                                    <span class="flex items-center gap-1">
+                                        <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                                        Unsubstantiated Cash Advances for "Future Event Decorations"
+                                        <span class="text-[0.65rem] bg-amber-500/20 px-1.5 py-0.5 rounded text-amber-400 font-bold">[5]</span>
+                                    </span>
+                                    <span class="font-bold text-rose-400">$(6,000)</span>
+                                </div>
+                                <div class="flex justify-between pt-1 border-t border-slate-800 font-bold text-slate-200">
+                                    <span class="font-sans">Net Cash Used in Financing Activities</span>
+                                    <span class="text-rose-400">$(10,000)</span>
+                                </div>
+                            </div>
+
+                            <!-- Summary Totals -->
+                            <div class="pt-3 border-t-2 border-slate-700 space-y-1.5 font-bold">
+                                <div class="flex justify-between text-slate-200">
+                                    <span class="font-sans">Net Increase in Cash and Cash Equivalents</span>
+                                    <span class="text-amber-400">+$500</span>
+                                </div>
+                                <div class="flex justify-between text-slate-400 text-xs">
+                                    <span class="font-sans">Beginning Cash Balance (September 1, 2025)</span>
+                                    <span>$500</span>
+                                </div>
+                                <div class="flex justify-between text-emerald-400 text-sm">
+                                    <span class="font-sans">Ending Cash Balance (May 31, 2026)</span>
+                                    <span>$1,000</span>
+                                </div>
+                            </div>
+
+                            <!-- Audit Footnotes Box -->
+                            <div class="mt-4 pt-4 border-t border-slate-800 text-xs font-sans space-y-2 text-slate-400">
+                                <span class="font-bold uppercase tracking-wider text-amber-400 block font-mono">Forensic Audit Footnotes &amp; Disclosures:</span>
+                                <div class="grid sm:grid-cols-2 gap-2 text-[0.75rem]">
+                                    <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                        <strong class="text-amber-300 font-mono">[1] Unverified Grocery Receipts:</strong> Handwritten store slips submitted without itemized breakdowns or register tapes.
+                                    </div>
+                                    <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                        <strong class="text-amber-300 font-mono">[2] Spoiled Goods Allowances:</strong> No physical inventory discrepancy logs or advisor sign-offs submitted to verify food disposal.
+                                    </div>
+                                    <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                        <strong class="text-amber-300 font-mono">[3] POS Hardware Liquidation:</strong> Electronic readers sold for cash; converted all concession operations to 100% cash-only.
+                                    </div>
+                                    <div class="p-2 rounded bg-slate-900 border border-slate-800">
+                                        <strong class="text-amber-300 font-mono">[4] Transport Allowance:</strong> Recurring monthly cash disbursements collected directly by Student Council President Marcus.
+                                    </div>
+                                    <div class="p-2 rounded bg-slate-900 border border-slate-800 sm:col-span-2">
+                                        <strong class="text-amber-300 font-mono">[5] Event Advances:</strong> Cash withdrawn for spirit decor; zero vendor invoices, receipts, or returned change filed with the treasurer.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Navigation to Phase 2 -->
+                <div class="mt-8 flex justify-end">
+                    <button onclick="switchPhase(2)" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20">
+                        Proceed to Phase 2: Detective Audit <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHASE 2: DETECTIVE AUDIT QUESTIONS         -->
+        <!-- ========================================== -->
+        <section id="phase-2" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+                <div class="border-b border-slate-800 pb-4 mb-6">
+                    <span class="text-xs font-mono uppercase text-amber-400">Investigation Micro-Lab &bull; 4 Minutes</span>
+                    <h2 class="text-2xl font-extrabold text-slate-100">Examine the Forensic Evidence</h2>
+                    <p class="text-slate-400 text-sm mt-1">Answer the 3 detective questions below using the Cash Flow Statement and Audit Notes.</p>
+                </div>
+
+                <div class="space-y-8" id="audit-questions">
+
+                    <!-- QUESTION 1: THE MONTHLY SKIM -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-5 sm:p-6 rounded-xl space-y-4" id="q1-box">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">1</span>
+                                The Monthly Skim: How did Marcus move cash directly into his personal pocket under Financing Activities?
+                            </h3>
+                        </div>
+                        <p class="text-xs text-slate-400">Look closely at section 3 ("Financing Activities &amp; Dispositions") and Notes [4] and [5].</p>
+
+                        <div class="space-y-2">
+                            <button onclick="answerQuestion(1, 'A')" id="q1-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>A) He took a $4,000 "Cash Security &amp; Transport Allowance" and $6,000 in unverified "Decorations Advances" without invoices or returned change ($10,000 total).</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(1, 'B')" id="q1-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>B) He paid a commercial wholesaler $14,000 for popcorn kernels and candy bars.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(1, 'C')" id="q1-opt-C" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>C) He took out an official bank loan for $500 to fund the opening cash register.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                        </div>
+
+                        <!-- Feedback Box -->
+                        <div id="q1-feedback" class="hidden p-4 rounded-xl border text-sm leading-relaxed"></div>
+                    </div>
+
+                    <!-- QUESTION 2: THE "GHOST" EXPENSES -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-5 sm:p-6 rounded-xl space-y-4" id="q2-box">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">2</span>
+                                The "Ghost" Expenses: How did Marcus use fake receipts under Operating Activities to disguise stolen snack money?
+                            </h3>
+                        </div>
+                        <p class="text-xs text-slate-400">Look at section 1 ("Operating Activities") and Notes [1] and [2].</p>
+
+                        <div class="space-y-2">
+                            <button onclick="answerQuestion(2, 'A')" id="q2-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>A) He charged customers credit card convenience fees and pocketed the processing fee.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(2, 'B')" id="q2-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>B) He padded expenses with $5,000 in unverified "emergency grocery purchases" and claimed $3,500 in unverified "spoiled goods refunds" ($8,500 total).</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(2, 'C')" id="q2-opt-C" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>C) He lowered the price of sodas to $0.50 so sales would look smaller than they really were.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                        </div>
+
+                        <!-- Feedback Box -->
+                        <div id="q2-feedback" class="hidden p-4 rounded-xl border text-sm leading-relaxed"></div>
+                    </div>
+
+                    <!-- QUESTION 3: ELIMINATING DIGITAL RECORDS -->
+                    <div class="bg-slate-950/70 border border-slate-800 p-5 sm:p-6 rounded-xl space-y-4" id="q3-box">
+                        <div class="flex items-start justify-between gap-3">
+                            <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">3</span>
+                                Eliminating Digital Records: What move under Investing Activities made it easier for Marcus to skim cash all year long?
+                            </h3>
+                        </div>
+                        <p class="text-xs text-slate-400">Look at section 2 ("Investing Activities") and Note [3].</p>
+
+                        <div class="space-y-2">
+                            <button onclick="answerQuestion(3, 'A')" id="q3-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>A) He bought a $2,000 commercial popcorn machine that broke down every Friday.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(3, 'B')" id="q3-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>B) He liquidated the Square electronic card readers ($1,000) to force the stand into 100% cash-only, destroying the digital paper trail.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                            <button onclick="answerQuestion(3, 'C')" id="q3-opt-C" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
+                                <span>C) He invested concession profits into high-risk stock market shares under the school's name.</span>
+                                <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
+                            </button>
+                        </div>
+
+                        <!-- Feedback Box -->
+                        <div id="q3-feedback" class="hidden p-4 rounded-xl border text-sm leading-relaxed"></div>
+                    </div>
+
+                </div>
+
+                <!-- Forensic Calculator Summary Tally -->
+                <div class="mt-8 bg-slate-950 p-5 rounded-xl border border-slate-800">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                        <span class="text-xs font-mono uppercase text-amber-400 font-bold">Forensic Evidence Tally</span>
+                        <span class="text-xs text-slate-400">Total Unaccounted / Diverted Funds</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-[0.65rem] text-slate-400 uppercase block">Financing Skim</span>
+                            <span class="text-base sm:text-lg font-mono font-bold text-rose-400">$10,000</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-[0.65rem] text-slate-400 uppercase block">Ghost Expenses</span>
+                            <span class="text-base sm:text-lg font-mono font-bold text-rose-400">$8,500</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-[0.65rem] text-slate-400 uppercase block">POS Liquidated</span>
+                            <span class="text-base sm:text-lg font-mono font-bold text-amber-400">$1,000</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-lg border border-amber-500/40 bg-amber-500/5">
+                            <span class="text-[0.65rem] text-amber-300 uppercase block font-bold">Total Diverted</span>
+                            <span class="text-base sm:text-lg font-mono font-bold text-emerald-400">$18,500</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation to Phase 3 -->
+                <div class="mt-8 flex justify-between items-center">
+                    <button onclick="switchPhase(1)" class="px-4 py-2.5 text-xs text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Evidence
+                    </button>
+                    <button id="btn-to-phase-3" onclick="switchPhase(3)" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20">
+                        Proceed to Phase 3: Audit Verdict <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PHASE 3: AUDIT VERDICT & FORENSIC DEBRIEF  -->
+        <!-- ========================================== -->
+        <section id="phase-3" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl space-y-8">
+
+                <!-- Verdict Header -->
+                <div class="border-b border-slate-800 pb-6 text-center sm:text-left flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-xs font-mono uppercase tracking-widest mb-2">
+                            Audit Complete &bull; Case Closed
+                        </span>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-100 serif">Fraud Confirmed: $18,500 Skimmed</h2>
+                    </div>
+                    <div class="bg-slate-950 px-5 py-3 rounded-2xl border border-slate-800 text-center">
+                        <span class="text-[0.65rem] text-slate-400 uppercase tracking-wider block font-bold">Investigation Score</span>
+                        <span class="text-2xl font-black font-mono text-emerald-400" id="final-score-display">3 / 3</span>
+                    </div>
+                </div>
+
+                <!-- The 3 Pillars of Marcus's Scheme -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-amber-400"></i> The Forensic Debrief
+                    </h3>
+
+                    <div class="grid sm:grid-cols-3 gap-4">
+
+                        <!-- Pillar 1 -->
+                        <div class="bg-slate-950/70 p-5 rounded-xl border border-slate-800 space-y-2">
+                            <span class="text-xs font-mono uppercase text-amber-400 font-bold">1. The Monthly Skim</span>
+                            <h4 class="font-bold text-slate-100 text-sm">Direct Personal Transfers</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Marcus paid himself a <strong class="text-amber-300">$4,000</strong> "Transport Allowance" and took <strong class="text-amber-300">$6,000</strong> in cash advances for school decorations that were never purchased, walking away with <strong class="text-emerald-400">$10,000</strong> straight into his pocket.
+                            </p>
+                        </div>
+
+                        <!-- Pillar 2 -->
+                        <div class="bg-slate-950/70 p-5 rounded-xl border border-slate-800 space-y-2">
+                            <span class="text-xs font-mono uppercase text-amber-400 font-bold">2. The "Ghost" Expenses</span>
+                            <h4 class="font-bold text-slate-100 text-sm">Padded Operational Outflows</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                He masked missing cash by fabricating <strong class="text-amber-300">$5,000</strong> in handwritten "emergency grocery purchases" and <strong class="text-amber-300">$3,500</strong> in cash refunds for "spoiled snacks" without disposal discrepancy logs (<strong class="text-emerald-400">$8,500</strong>).
+                            </p>
+                        </div>
+
+                        <!-- Pillar 3 -->
+                        <div class="bg-slate-950/70 p-5 rounded-xl border border-slate-800 space-y-2">
+                            <span class="text-xs font-mono uppercase text-amber-400 font-bold">3. Eliminating Digital Records</span>
+                            <h4 class="font-bold text-slate-100 text-sm">Destroying The Paper Trail</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Marcus liquidated the Square electronic card readers (<strong class="text-amber-300">+$1,000</strong> cash) to force the concession stand to be 100% cash-only. No card records meant nobody could verify how much money actually entered the registers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forensic Accounting Takeaways -->
+                <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl space-y-4">
+                    <h3 class="text-base font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400"></i> What Real Forensic Accountants Look For
+                    </h3>
+                    <div class="grid sm:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        <div class="space-y-1 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <strong class="text-slate-100 block font-semibold flex items-center gap-1.5">
+                                <i data-lucide="split" class="w-4 h-4 text-sky-400"></i> Segregation of Duties
+                            </strong>
+                            Marcus handled the cash, bought the supplies, approved the payouts, and reported the balances. In business, the person handling cash should never be the person writing or approving the checks!
+                        </div>
+                        <div class="space-y-1 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
+                            <strong class="text-slate-100 block font-semibold flex items-center gap-1.5">
+                                <i data-lucide="receipt" class="w-4 h-4 text-emerald-400"></i> Itemized Substantiation
+                            </strong>
+                            Handwritten slips and vague claims of "food spoilage" are classic fraud red flags. Legitimate businesses require register receipts, vendor invoices, and dual-party inventory waste logs.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Registration Pitch Card -->
+                <div class="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-950 border border-amber-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <span class="text-xs font-mono uppercase text-amber-400 font-bold">Why Take High School Accounting?</span>
+                        <h4 class="text-xl font-bold text-slate-100">Accounting (ACCT 150) &bull; Become a Financial Detective</h4>
+                        <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
+                            Forensic accountants don't just calculate tax returns &mdash; they work with the FBI, corporate boardrooms, and law enforcement to crack white-collar crime, track hidden millions, and protect honest businesses.
+                        </p>
+                    </div>
+                    <a href="../index.html" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl whitespace-nowrap transition shadow-lg shadow-amber-500/20 shrink-0 flex items-center gap-2">
+                        Back to Station Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
+                    <button onclick="resetLab()" class="text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Restart Forensic Lab
+                    </button>
+                    <span class="text-slate-500">&copy; Titan School of Business &bull; Station Rotation</span>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-400 no-print">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>&copy; Titan School of Business &bull; Station Rotation Program</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="../index.html" class="hover:text-amber-400 transition">&larr; Return to All Stations</a>
+                <span>&bull;</span>
+                <span>7-Minute Rotation</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Script Logic -->
+    <script>
+        // Phase Navigation
+        let currentPhase = 1;
+        let answeredQuestions = { 1: false, 2: false, 3: false };
+        let userScores = { 1: 0, 2: 0, 3: 0 };
+
+        function switchPhase(phaseNum) {
+            if (isDocFullscreen) {
+                exitDocFullscreenUI();
+            }
+            currentPhase = phaseNum;
+
+            // Hide all phases
+            document.getElementById('phase-1').classList.add('hidden');
+            document.getElementById('phase-2').classList.add('hidden');
+            document.getElementById('phase-3').classList.add('hidden');
+
+            // Show target phase
+            document.getElementById(`phase-${phaseNum}`).classList.remove('hidden');
+
+            // Update tabs
+            for (let i = 1; i <= 3; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (i === phaseNum) {
+                    tab.className = "flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-amber-400 text-amber-400 whitespace-nowrap transition";
+                    tab.children[0].className = "w-5 h-5 rounded-full bg-amber-400/20 text-amber-400 text-xs flex items-center justify-center font-bold";
+                } else {
+                    tab.className = "flex items-center gap-2 px-5 py-3 font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition";
+                    tab.children[0].className = "w-5 h-5 rounded-full bg-slate-800 text-slate-400 text-xs flex items-center justify-center font-bold";
+                }
+            }
+
+            // Update Progress Bar
+            updateProgressBar();
+
+            // Trigger confetti if reaching phase 3
+            if (phaseNum === 3) {
+                const totalScore = userScores[1] + userScores[2] + userScores[3];
+                document.getElementById('final-score-display').innerText = `${totalScore} / 3`;
+                triggerConfetti();
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgressBar() {
+            let percent = 15; // default Phase 1
+            if (currentPhase === 2) {
+                const count = Object.values(answeredQuestions).filter(Boolean).length;
+                percent = 30 + (count * 20); // 50%, 70%, 90%
+            } else if (currentPhase === 3) {
+                percent = 100;
+            }
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+        }
+
+        // Statement View Toggle: Interactive vs Embedded Google Doc
+        function setStatementView(view) {
+            if (isDocFullscreen && view === 'interactive') {
+                exitDocFullscreenUI();
+            }
+            const interactiveDiv = document.getElementById('view-interactive');
+            const docDiv = document.getElementById('view-doc');
+            const btnInteractive = document.getElementById('btn-view-interactive');
+            const btnDoc = document.getElementById('btn-view-doc');
+
+            if (view === 'interactive') {
+                interactiveDiv.classList.remove('hidden');
+                docDiv.classList.add('hidden');
+                btnInteractive.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition flex items-center gap-1.5";
+                btnDoc.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5";
+            } else {
+                interactiveDiv.classList.add('hidden');
+                docDiv.classList.remove('hidden');
+                btnDoc.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition flex items-center gap-1.5";
+                btnInteractive.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-1.5";
+            }
+            lucide.createIcons();
+        }
+
+        // Fullscreen Mode for Google Doc
+        let isDocFullscreen = false;
+
+        function toggleDocFullscreen() {
+            isDocFullscreen = !isDocFullscreen;
+            const docContainer = document.getElementById('view-doc');
+            const iframe = document.getElementById('doc-iframe');
+            const docFsText = document.getElementById('doc-fullscreen-text');
+            const topFsText = document.getElementById('top-doc-fullscreen-text');
+            const docFsIcon = document.getElementById('doc-fullscreen-icon');
+            const topFsIcon = document.getElementById('top-fullscreen-icon');
+
+            if (isDocFullscreen) {
+                // Ensure Doc view is active
+                setStatementView('doc');
+
+                // Apply fullscreen modal styling
+                docContainer.classList.add('fixed', 'inset-0', 'z-[100]', 'p-2', 'sm:p-4', 'bg-slate-950/95', 'backdrop-blur-md', 'flex', 'flex-col', 'rounded-none', 'border-0');
+                docContainer.classList.remove('rounded-xl');
+                iframe.classList.remove('h-[520px]');
+                iframe.classList.add('flex-grow', 'h-full', 'rounded-lg');
+
+                if (docFsText) docFsText.innerText = "Exit Full Screen";
+                if (topFsText) topFsText.innerText = "Exit Full Screen";
+                if (docFsIcon) docFsIcon.setAttribute('data-lucide', 'minimize');
+                if (topFsIcon) topFsIcon.setAttribute('data-lucide', 'minimize-2');
+
+                // Native fullscreen request if available
+                if (document.fullscreenEnabled && !document.fullscreenElement) {
+                    docContainer.requestFullscreen().catch(() => {});
+                }
+            } else {
+                exitDocFullscreenUI();
+            }
+            lucide.createIcons();
+        }
+
+        function exitDocFullscreenUI() {
+            isDocFullscreen = false;
+            const docContainer = document.getElementById('view-doc');
+            const iframe = document.getElementById('doc-iframe');
+            const docFsText = document.getElementById('doc-fullscreen-text');
+            const topFsText = document.getElementById('top-doc-fullscreen-text');
+            const docFsIcon = document.getElementById('doc-fullscreen-icon');
+            const topFsIcon = document.getElementById('top-fullscreen-icon');
+
+            if (docContainer) {
+                docContainer.classList.remove('fixed', 'inset-0', 'z-[100]', 'p-2', 'sm:p-4', 'bg-slate-950/95', 'backdrop-blur-md', 'flex', 'flex-col', 'rounded-none', 'border-0');
+                docContainer.classList.add('rounded-xl');
+            }
+            if (iframe) {
+                iframe.classList.remove('flex-grow', 'h-full', 'rounded-lg');
+                iframe.classList.add('h-[520px]');
+            }
+
+            if (docFsText) docFsText.innerText = "Full Screen";
+            if (topFsText) topFsText.innerText = "Full Screen";
+            if (docFsIcon) docFsIcon.setAttribute('data-lucide', 'maximize');
+            if (topFsIcon) topFsIcon.setAttribute('data-lucide', 'maximize-2');
+
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            }
+            lucide.createIcons();
+        }
+
+        // Listen for ESC key or native fullscreen exit
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isDocFullscreen) {
+                exitDocFullscreenUI();
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement && isDocFullscreen) {
+                exitDocFullscreenUI();
+            }
+        });
+
+        // Question Answers & Explanations
+        const answersKey = {
+            1: {
+                correct: 'A',
+                explanation: "Correct! Note [4] shows Marcus collected a recurring $4,000 cash 'Transport Allowance' and Note [5] shows he withdrew $6,000 in 'Decorations Advances' with zero receipts or returned funds. That is $10,000 skimmed directly under Financing Activities!"
+            },
+            2: {
+                correct: 'B',
+                explanation: "Correct! Note [1] shows Marcus submitted $5,000 in handwritten grocery slips with no itemized register tapes, and Note [2] shows $3,500 in alleged 'spoiled goods' cash refunds with zero disposal logs. He used these phantom expenses ($8,500) to pocket cash while pretending the money went to operating costs."
+            },
+            3: {
+                correct: 'B',
+                explanation: "Correct! By selling off the electronic Square card readers ($1,000 in Note [3]), Marcus turned the entire concession stand into a 100% cash-only operation. This wiped out any digital sales tracking or credit card audit trail, allowing him to skim cash unnoticed all year."
+            }
+        };
+
+        function answerQuestion(qNum, selected) {
+            answeredQuestions[qNum] = true;
+            const key = answersKey[qNum];
+            const isCorrect = (selected === key.correct);
+            userScores[qNum] = isCorrect ? 1 : 0;
+
+            const feedbackEl = document.getElementById(`q${qNum}-feedback`);
+            feedbackEl.classList.remove('hidden');
+
+            const options = ['A', 'B', 'C'];
+            options.forEach(opt => {
+                const btn = document.getElementById(`q${qNum}-opt-${opt}`);
+                if (!btn) return;
+                btn.disabled = true;
+
+                if (opt === key.correct) {
+                    btn.className = "w-full text-left p-3.5 rounded-lg border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 text-sm flex items-center justify-between";
+                    btn.querySelector('i').setAttribute('data-lucide', 'check-circle-2');
+                    btn.querySelector('i').className = "w-4 h-4 text-emerald-400 shrink-0";
+                } else if (opt === selected && !isCorrect) {
+                    btn.className = "w-full text-left p-3.5 rounded-lg border border-rose-500/50 bg-rose-500/10 text-rose-300 text-sm flex items-center justify-between";
+                    btn.querySelector('i').setAttribute('data-lucide', 'x-circle');
+                    btn.querySelector('i').className = "w-4 h-4 text-rose-400 shrink-0";
+                } else {
+                    btn.className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 text-sm flex items-center justify-between opacity-50";
+                }
+            });
+
+            if (isCorrect) {
+                feedbackEl.className = "p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-200 text-sm leading-relaxed";
+                feedbackEl.innerHTML = `<strong class="text-emerald-400 flex items-center gap-1.5 mb-1"><i data-lucide="check" class="w-4 h-4"></i> Forensic Lead Confirmed!</strong> ${key.explanation}`;
+            } else {
+                feedbackEl.className = "p-4 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-200 text-sm leading-relaxed";
+                feedbackEl.innerHTML = `<strong class="text-rose-400 flex items-center gap-1.5 mb-1"><i data-lucide="alert-circle" class="w-4 h-4"></i> Audit Discrepancy:</strong> ${key.explanation}`;
+            }
+
+            updateProgressBar();
+            lucide.createIcons();
+        }
+
+        // Timer Logic
+        let timerSeconds = 420; // 7 Minutes
+        let timerInterval = null;
+        let timerRunning = false;
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                document.getElementById('timer-play-icon').setAttribute('data-lucide', 'pause');
+                lucide.createIcons();
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        pauseTimer();
+                        alert("7 minutes are up! Wrap up your investigation and proceed to the Audit Verdict.");
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            timerRunning = false;
+            clearInterval(timerInterval);
+            document.getElementById('timer-play-icon').setAttribute('data-lucide', 'play');
+            lucide.createIcons();
+        }
+
+        function toggleTimer() {
+            if (timerRunning) {
+                pauseTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timerSeconds = 420;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timer-display').innerText =
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function resetLab() {
+            answeredQuestions = { 1: false, 2: false, 3: false };
+            userScores = { 1: 0, 2: 0, 3: 0 };
+            resetTimer();
+
+            // Reset buttons
+            [1, 2, 3].forEach(qNum => {
+                const feedbackEl = document.getElementById(`q${qNum}-feedback`);
+                feedbackEl.classList.add('hidden');
+                feedbackEl.innerHTML = '';
+
+                ['A', 'B', 'C'].forEach(opt => {
+                    const btn = document.getElementById(`q${qNum}-opt-${opt}`);
+                    if (!btn) return;
+                    btn.disabled = false;
+                    btn.className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group";
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.setAttribute('data-lucide', 'circle');
+                        icon.className = "w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0";
+                    }
+                });
+            });
+
+            switchPhase(1);
+            lucide.createIcons();
+        }
+
+        // Initialize on load
+        window.onload = function () {
+            lucide.createIcons();
+            startTimer();
+            updateProgressBar();
+        };
+    </script>
+</body>
+</html>

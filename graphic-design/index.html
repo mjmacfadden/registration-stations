@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keep It or Scrap It? Famous Redesign Reactions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Shared Titan School of Business theme & styles -->
+    <script src="../assets/theme.js"></script>
+    <link rel="stylesheet" href="../assets/common.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-slate-950">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 no-print">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+
+            <!-- Branding -->
+            <div class="flex items-center gap-3">
+                <a href="../index.html" class="p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-400 hover:bg-amber-500/20 transition shrink-0" title="Back to Titan School of Business">
+                    <i data-lucide="palette" class="w-6 h-6"></i>
+                </a>
+                <div>
+                    <a href="../index.html" class="text-xs font-semibold uppercase tracking-wider text-amber-400 hover:text-amber-300 transition">Titan School of Business</a>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-slate-500"> • GDES 130 Brand Redesign Lab</span>
+                    <h1 class="text-lg font-bold text-slate-100 leading-tight">Keep It or Scrap It?</h1>
+                </div>
+            </div>
+
+            <!-- Timer Widget -->
+            <div class="flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
+                <i data-lucide="clock" class="w-4 h-4 text-amber-400 animate-pulse"></i>
+                <div class="text-xl font-mono font-bold text-amber-400 tracking-wider" id="timer-display">07:00</div>
+                <div class="flex items-center gap-1 border-l border-slate-800 pl-3">
+                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Play/Pause Timer">
+                        <i data-lucide="play" id="timer-play-icon" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 transition" title="Reset Timer">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Top Controls (Theme & Score) -->
+            <div class="flex items-center gap-3">
+                <!-- Theme Toggle -->
+                <button onclick="toggleTheme()" id="theme-toggle-btn" class="px-2.5 py-1.5 rounded-lg border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-slate-100 transition flex items-center gap-1.5 text-xs font-medium shrink-0" title="Switch Theme">
+                    <i data-lucide="sun" id="theme-toggle-icon" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span id="theme-toggle-label">Light View</span>
+                </button>
+
+                <!-- Score Badge -->
+                <div class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-right">
+                    <span class="block text-[0.65rem] font-bold tracking-widest text-slate-500">SCORE</span>
+                    <span class="text-xl font-extrabold text-emerald-400" id="score-display">0 <span class="text-sm font-semibold text-slate-500">/ 12</span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-2xl mx-auto px-4 py-8 flex-grow w-full">
+
+        <!-- Quiz Card -->
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden" id="quiz-card">
+            <div class="bg-slate-950/40 border-b border-slate-800 p-5 sm:p-6">
+                <div class="flex items-center justify-between gap-4 mb-4">
+                    <span class="text-xs font-semibold bg-slate-800 text-slate-300 px-3 py-1 rounded-full" id="question-count">Question 1 of 12</span>
+                    <div class="w-32 h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700/50">
+                        <div id="progress-fill" class="bg-emerald-500 h-full w-[8%] transition-all duration-300"></div>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <i data-lucide="image" class="w-5 h-5 text-amber-400 mt-0.5 shrink-0"></i>
+                    <p class="text-slate-200 font-medium leading-relaxed" id="event-text">Loading redesign scenario...</p>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-5">
+                <!-- Brand Under Review -->
+                <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-5 text-center">
+                    <span class="block text-[0.65rem] font-bold tracking-widest text-slate-500 mb-1.5">BRAND / REDESIGN</span>
+                    <h2 class="text-2xl font-extrabold text-slate-100" id="company-name">---</h2>
+
+                    <div class="mt-3">
+                        <button class="bg-amber-500/10 border border-amber-500/40 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold hover:bg-amber-500/20 hover:border-amber-500 transition flex items-center gap-1.5 mx-auto" id="hint-btn" onclick="revealHint()">
+                            <i data-lucide="lightbulb" class="w-3.5 h-3.5"></i> Hint (Costs 0.5 pts)
+                        </button>
+                        <p class="hidden text-sm text-amber-300 italic mt-3 bg-amber-500/10 border border-dashed border-amber-500/30 rounded-lg px-3 py-2" id="company-context">---</p>
+                    </div>
+                </div>
+
+                <!-- Keep / Scrap Actions -->
+                <div class="grid grid-cols-2 gap-4">
+                    <button class="flex items-center justify-center gap-3 border-2 border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 hover:border-emerald-500 text-emerald-400 rounded-xl p-4 font-bold transition disabled:opacity-60 disabled:cursor-default" id="keep-btn" onclick="makeChoice('KEEP')">
+                        <i data-lucide="thumbs-up" class="w-6 h-6"></i>
+                        <span class="flex flex-col items-start leading-tight">
+                            <span class="text-base sm:text-lg font-extrabold">KEEP IT</span>
+                            <span class="text-[0.7rem] font-medium opacity-80">Brand Sticks With It</span>
+                        </span>
+                    </button>
+                    <button class="flex items-center justify-center gap-3 border-2 border-rose-500/40 bg-rose-500/10 hover:bg-rose-500/20 hover:border-rose-500 text-rose-400 rounded-xl p-4 font-bold transition disabled:opacity-60 disabled:cursor-default" id="scrap-btn" onclick="makeChoice('REVERT')">
+                        <i data-lucide="undo-2" class="w-6 h-6"></i>
+                        <span class="flex flex-col items-start leading-tight">
+                            <span class="text-base sm:text-lg font-extrabold">SCRAP IT</span>
+                            <span class="text-[0.7rem] font-medium opacity-80">Reverts Under Backlash</span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Feedback Area -->
+                <div class="hidden rounded-xl p-5 border" id="feedback-card">
+                    <div class="flex items-center gap-2 font-bold text-base mb-2" id="feedback-header">
+                        <span id="feedback-icon">✓</span>
+                        <span id="feedback-title">Correct Prediction!</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-slate-300" id="feedback-explanation"></p>
+                    <div class="flex justify-end mt-4">
+                        <button class="bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition" id="next-btn" onclick="nextQuestion()">
+                            Next Redesign &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Screen -->
+        <section class="hidden bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-8 sm:p-10 text-center space-y-5" id="results-card">
+            <div class="text-5xl">🎨</div>
+            <h2 class="text-2xl font-extrabold text-slate-100 serif">Portfolio Review Complete!</h2>
+            <p class="text-sm text-slate-400 max-w-sm mx-auto">Here is how you performed predicting real brand redesign reactions:</p>
+
+            <div class="max-w-xs mx-auto bg-slate-950 border border-slate-800 rounded-xl p-6">
+                <div class="text-4xl font-extrabold text-emerald-400" id="final-score">0 / 12</div>
+                <div class="text-sm text-slate-400 font-semibold mt-1" id="score-rating">Creative Director!</div>
+            </div>
+
+            <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center gap-2 mx-auto transition" onclick="restartQuiz()">
+                <i data-lucide="refresh-ccw" class="w-4 h-4"></i> Review Again
+            </button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-400 no-print">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p><a href="../index.html" class="text-amber-400 hover:text-amber-300 font-semibold transition">&larr; Titan School of Business</a> • Real Logo & Package Redesign Reactions</p>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span>Self-Directed (7 Min)</span>
+                <span>•</span>
+                <span>Brand Identity & Design</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
