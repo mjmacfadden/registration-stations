@@ -66,6 +66,11 @@
         </div>
     </header>
 
+    <!-- Standard directions panel (same spot on every station) -->
+    <div id="station-guide"></div>
+    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; The Pitch (1 min):</strong> read the case brief.", "<strong>Phase 2 &ndash; You Be The CEO (3 min):</strong> answer the questions to unlock Phase 3.", "<strong>Phase 3 &ndash; Tomorrow's Blockbuster (3 min):</strong> read the real outcome, then draft your disruption prediction (use <em>Copy Prediction Draft</em> and paste it into your worksheet)."]};</script>
+    <script src="../assets/station-guide.js"></script>
+
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
 
@@ -284,7 +289,7 @@
 
                 </div>
 
-                <!-- The Final Step: Student Predictions & Google Form Submission -->
+                <!-- The Final Step: Student Predictions -> Google Doc worksheet -->
                 <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
                     <div class="border-b border-slate-800 pb-4">
                         <span class="text-xs font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
@@ -336,7 +341,7 @@
                         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
                             <span class="text-xs font-mono uppercase text-slate-400 font-bold">Draft Your Prediction:</span>
                             <span class="text-xs text-amber-400 flex items-center gap-1.5 font-medium">
-                                <i data-lucide="clipboard-pen-line" class="w-3.5 h-3.5"></i> Submit via Google Form below
+                                <i data-lucide="clipboard-pen-line" class="w-3.5 h-3.5"></i> Paste into your worksheet (Google Doc)
                             </span>
                         </div>
 
@@ -355,22 +360,17 @@
                             </div>
                         </div>
 
-                        <!-- Action Bar: Google Form Button + Copy Response -->
+                        <!-- Action Bar: Copy Response + Open Worksheet -->
                         <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
                             <button onclick="copyPredictionText()" id="btn-copy-pred" class="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition">
                                 <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Prediction Draft</span>
                             </button>
 
-                            <a id="btn-google-form" href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/20">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Submit to Google Form
+                            <a id="btn-google-form" href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/20">
+                                <i data-lucide="external-link" class="w-4 h-4"></i> Open Worksheet (Google Doc)
                             </a>
                         </div>
                     </div>
-
-                    <!-- Instructor Configuration Note -->
-                    <p class="text-[0.7rem] text-slate-500 italic text-center">
-                        Instructor: Set your Google Form link in the script configuration variable <code>GOOGLE_FORM_URL</code>.
-                    </p>
                 </div>
 
                 <!-- Course Registration Pitch Card -->
@@ -414,8 +414,8 @@
     <!-- JavaScript Logic -->
     <script>
         // ======= CONFIGURATION =======
-        // Instructor: Paste your Google Form URL here so students can submit their predictions directly!
-        const GOOGLE_FORM_URL = "https://forms.google.com";
+        // Students record answers in the shared Google Doc worksheet (no backend).
+        const WORKSHEET_URL = window.WORKSHEET_URL;
 
         // State Variables
         let timerSeconds = 420; // 7 Minutes
@@ -431,10 +431,10 @@
             startTimer();
             updateProgressBar();
 
-            // Set Google Form link
+            // Point the button at the Google Doc worksheet
             const formBtn = document.getElementById('btn-google-form');
-            if (formBtn && GOOGLE_FORM_URL) {
-                formBtn.href = GOOGLE_FORM_URL;
+            if (formBtn && WORKSHEET_URL) {
+                formBtn.href = WORKSHEET_URL;
             }
         };
 
@@ -450,7 +450,7 @@
                         updateTimerDisplay();
                     } else {
                         pauseTimer();
-                        alert("7 minutes are up! Submit your disruption prediction and wrap up.");
+                        alert("7 minutes are up! Paste your disruption prediction into your worksheet and wrap up.");
                     }
                 }, 1000);
             }
@@ -624,7 +624,7 @@
                 });
             }
 
-            alert("Outstanding strategic thinking! Be sure to submit your prediction on the Google Form (or record it on your worksheet), then return to the Station Menu.");
+            alert("Outstanding strategic thinking! Be sure to paste your prediction into your worksheet (Google Doc), then return to the Station Menu.");
         }
 
         function restartCaseStudy() {
