@@ -22,7 +22,7 @@
         if (!el || !g) return;
         var steps = ['Press <strong>&#9654;</strong> on the timer at the top. You have ' + (g.minutes || 7) + ' minutes.']
             .concat(g.steps)
-            .concat(['Write your answers in your <strong>Station Worksheet</strong> (Google Doc), then tap <strong>Titan School of Business</strong> at the top to return to the Station Menu.']);
+            .concat(['Write your answers in your <strong>Station Worksheet</strong> (Google Doc), then move to your next station.']);
         var lis = steps.map(function (s, i) {
             return '<li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-amber-500 text-slate-950 text-xs font-bold flex items-center justify-center">' + (i + 1) + '</span><span class="text-slate-300 text-sm leading-relaxed">' + s + '</span></li>';
         }).join('');
