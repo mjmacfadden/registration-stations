@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><!-- Simplified recreation of Instagram's 2010-2016 retro camera icon (for classroom comparison) -->
+<rect x="8" y="8" width="184" height="184" rx="36" fill="#7a5a43"/><path d="M8 44a36 36 0 0 1 36-36h112a36 36 0 0 1 36 36v26H8z" fill="#e8dcc6"/>
+<rect x="28" y="8" width="7" height="62" fill="#e43a3a"/><rect x="35" y="8" width="7" height="62" fill="#f5c33b"/><rect x="42" y="8" width="7" height="62" fill="#4fae4f"/><rect x="49" y="8" width="7" height="62" fill="#3a83c9"/>
+<rect x="140" y="26" width="34" height="26" rx="6" fill="#2b2b2b"/><rect x="144" y="30" width="26" height="18" rx="4" fill="#556"/>
+<circle cx="100" cy="112" r="50" fill="#3c2e24"/><circle cx="100" cy="112" r="40" fill="#e8dcc6"/><circle cx="100" cy="112" r="32" fill="#1d1d2b"/><circle cx="100" cy="112" r="20" fill="#2f3a5a"/><circle cx="90" cy="102" r="7" fill="#fff" opacity=".55"/></svg>

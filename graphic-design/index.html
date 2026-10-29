@@ -90,10 +90,22 @@
                     <span class="block text-[0.65rem] font-bold tracking-widest text-slate-500 mb-1.5">BRAND / REDESIGN</span>
                     <h2 class="text-2xl font-extrabold text-slate-100" id="company-name">---</h2>
 
-                    <div class="mt-4 flex justify-center">
-                        <div class="bg-white rounded-xl px-5 py-3 inline-flex items-center justify-center shadow">
-                            <img id="brand-logo" src="" alt="" class="max-h-24 max-w-[240px] w-auto h-auto object-contain">
-                        </div>
+                    <!-- Before / After logos -->
+                    <div class="mt-4 grid grid-cols-2 gap-3 items-start">
+                        <figure class="flex flex-col items-center gap-1.5">
+                            <figcaption class="text-[0.65rem] font-bold tracking-widest text-slate-400">BEFORE</figcaption>
+                            <div class="bg-white rounded-xl w-full h-32 px-3 py-3 flex items-center justify-center shadow">
+                                <img id="logo-before" src="" alt="" class="max-h-24 max-w-full w-auto h-auto object-contain">
+                                <span id="logo-before-missing" class="hidden text-xs text-slate-500 italic text-center">Original image not available</span>
+                            </div>
+                        </figure>
+                        <figure class="flex flex-col items-center gap-1.5">
+                            <figcaption class="text-[0.65rem] font-bold tracking-widest text-amber-400">AFTER (THE REDESIGN)</figcaption>
+                            <div class="bg-white rounded-xl w-full h-32 px-3 py-3 flex items-center justify-center shadow">
+                                <img id="logo-after" src="" alt="" class="max-h-24 max-w-full w-auto h-auto object-contain">
+                                <span id="logo-after-missing" class="hidden text-xs text-slate-500 italic text-center">Original image not available</span>
+                            </div>
+                        </figure>
                     </div>
 
                     <div class="mt-3">
