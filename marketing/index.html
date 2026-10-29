@@ -68,7 +68,7 @@
 
     <!-- Standard directions panel (same spot on every station) -->
     <div id="station-guide"></div>
-    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; The Brief (2 min):</strong> read the brief and open Google Gemini in a new tab.", "<strong>Phase 2 &ndash; Gemini Mockup Studio (5 min):</strong> use Gemini to create your brand name, audience, tagline, and bottle mockup, then write your concept and reflection in your worksheet."]};</script>
+    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; The Brief (2 min):</strong> read the brief and open Google Gemini in a new tab.", "<strong>Phase 2 &ndash; Gemini Mockup Studio (5 min):</strong> use Gemini to create your brand name, audience, tagline, and bottle mockup, then email your final mockup image to your teacher."]};</script>
     <script src="../assets/station-guide.js"></script>
 
     <!-- Main Container -->
@@ -142,7 +142,7 @@
                         <ul class="list-disc list-inside text-xs sm:text-sm text-slate-300 space-y-1">
                             <li>Use <strong class="text-slate-100">Google Gemini</strong> to brainstorm a brand name, niche audience, and bold tagline.</li>
                             <li>Have <strong class="text-slate-100">Google Gemini generate the visual mockup image</strong> of your custom bottle or can directly!</li>
-                            <li>Record your final concept and marketing reflection in your Station Worksheet (Google Doc).</li>
+                            <li>Email your final Gemini mockup image to your teacher.</li>
                         </ul>
                     </div>
 
@@ -336,24 +336,19 @@
                     </div>
                 </div>
 
-                <!-- STEP C: RECORD IN THE GOOGLE DOC -->
+                <!-- STEP C: EMAIL THE FINAL MOCKUP -->
                 <div class="space-y-4 pt-2">
                     <div class="flex items-center gap-2 text-slate-100 font-bold text-base">
                         <span class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 text-xs flex items-center justify-center font-mono">C</span>
-                        <h3>Step C: Record Your Concept &amp; Marketer Reflection</h3>
+                        <h3>Step C: Email Your Final Mockup</h3>
                     </div>
-                    <a href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener" class="block bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 rounded-xl p-4 text-sm text-slate-200 transition space-y-2">
-                        <span class="flex items-center gap-2 font-bold text-amber-400"><i data-lucide="file-pen-line" class="w-5 h-5"></i> Write these in your Station Worksheet (Google Doc):</span>
+                    <div class="bg-amber-500/10 border border-amber-500/40 rounded-xl p-4 text-sm text-slate-200 space-y-2">
+                        <span class="flex items-center gap-2 font-bold text-amber-400"><i data-lucide="mail" class="w-5 h-5"></i> Email your final Gemini mockup image to your teacher.</span>
                         <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-300 space-y-1">
-                            <li>Chosen Brand Name</li>
-                            <li>Target Audience / Niche</li>
-                            <li>Unique Selling Point (USP)</li>
-                            <li>Winning Tagline</li>
-                            <li>Container type and vibe you used for your Gemini mockup (optional: paste a screenshot)</li>
-                            <li><strong>Marketer Reflection:</strong> In 1&ndash;2 sentences, why would someone pay $3.50 for your brand's water instead of drinking free tap water or buying a $0.99 generic bottle?</li>
+                            <li>In Gemini, download (or screenshot) your final bottle/can mockup.</li>
+                            <li>Email it to your teacher with your name and brand name in the subject line.</li>
                         </ol>
-                        <span class="block text-xs text-slate-400">Nothing is typed on this page. First time? File &rarr; Make a copy.</span>
-                    </a>
+                    </div>
                 </div>
 
                 <!-- Forensic Marketing Takeaways -->
@@ -506,7 +501,7 @@
                     origin: { y: 0.6 }
                 });
             }
-            alert("Awesome work! Make sure your brand concept and reflection are written in your Station Worksheet (Google Doc), then move to your next station.");
+            alert("Awesome work! Make sure you emailed your final mockup to your teacher, then move to your next station.");
         }
 
         // Timer Logic
@@ -525,7 +520,7 @@
                         updateTimerDisplay();
                     } else {
                         pauseTimer();
-                        alert("7 minutes are up! Wrap up your Gemini mockup and record your reflection.");
+                        alert("7 minutes are up! Wrap up your Gemini mockup and email it to your teacher.");
                     }
                 }, 1000);
             }
