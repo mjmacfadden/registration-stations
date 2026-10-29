@@ -68,7 +68,7 @@
 
     <!-- Standard directions panel (same spot on every station) -->
     <div id="station-guide"></div>
-    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; The Brief (2 min):</strong> read the brief and open Google Gemini in a new tab.", "<strong>Phase 2 &ndash; Gemini Mockup Studio (5 min):</strong> use Gemini to create your brand name, audience, tagline, and bottle mockup, then type your details and reflection."]};</script>
+    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; The Brief (2 min):</strong> read the brief and open Google Gemini in a new tab.", "<strong>Phase 2 &ndash; Gemini Mockup Studio (5 min):</strong> use Gemini to create your brand name, audience, tagline, and bottle mockup, then write your concept and reflection in your worksheet."]};</script>
     <script src="../assets/station-guide.js"></script>
 
     <!-- Main Container -->
@@ -142,7 +142,7 @@
                         <ul class="list-disc list-inside text-xs sm:text-sm text-slate-300 space-y-1">
                             <li>Use <strong class="text-slate-100">Google Gemini</strong> to brainstorm a brand name, niche audience, and bold tagline.</li>
                             <li>Have <strong class="text-slate-100">Google Gemini generate the visual mockup image</strong> of your custom bottle or can directly!</li>
-                            <li>Record your final concept and marketing reflection on your worksheet.</li>
+                            <li>Record your final concept and marketing reflection in your Station Worksheet (Google Doc).</li>
                         </ul>
                     </div>
 
@@ -336,45 +336,24 @@
                     </div>
                 </div>
 
-                <!-- STEP C: STUDENT CAPTURE & WORKSHEET CHECK -->
+                <!-- STEP C: RECORD IN THE GOOGLE DOC -->
                 <div class="space-y-4 pt-2">
                     <div class="flex items-center gap-2 text-slate-100 font-bold text-base">
                         <span class="w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 text-xs flex items-center justify-center font-mono">C</span>
                         <h3>Step C: Record Your Concept &amp; Marketer Reflection</h3>
                     </div>
-                    <p class="text-xs text-slate-400">
-                        Type your chosen details below to verify your work and record them on your rotation worksheet:
-                    </p>
-
-                    <div class="grid sm:grid-cols-2 gap-4 text-xs">
-                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
-                            <span class="text-slate-400 font-semibold uppercase block">1. Chosen Brand Name:</span>
-                            <input id="rec-name" type="text" oninput="updateProgressBar()" placeholder="e.g. Apex Hydration" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
-                            <span class="text-slate-400 font-semibold uppercase block">2. Target Audience / Niche:</span>
-                            <input id="rec-audience" type="text" oninput="updateProgressBar()" placeholder="e.g. Competitive Esports Gamers" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
-                            <span class="text-slate-400 font-semibold uppercase block">3. Unique Selling Point (USP):</span>
-                            <input id="rec-usp" type="text" oninput="updateProgressBar()" placeholder="e.g. Zero-sugar electrolyte clarity for reaction time" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-                        <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 space-y-1">
-                            <span class="text-slate-400 font-semibold uppercase block">4. Winning Tagline:</span>
-                            <input id="rec-tagline" type="text" oninput="updateProgressBar()" placeholder="e.g. Never Miss a Frame" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-                    </div>
-
-                    <!-- Reflection Box -->
-                    <div class="bg-slate-950/90 border border-slate-800 rounded-xl p-4 sm:p-5 space-y-2">
-                        <label class="text-xs font-bold text-slate-200 uppercase tracking-wide flex items-center gap-1.5">
-                            <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-amber-400"></i> Marketer Reflection (Write on your worksheet):
-                        </label>
-                        <p class="text-xs text-slate-400">
-                            In 1&ndash;2 sentences, why would someone pay $3.50 for your brand's water instead of drinking free tap water or buying a $0.99 generic bottle?
-                        </p>
-                        <textarea id="rec-reflection" rows="2" oninput="updateProgressBar()" placeholder="Explain your perceived value story..." class="w-full bg-slate-900 border border-slate-800 rounded-lg p-3 text-xs text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500 transition"></textarea>
-                    </div>
+                    <a href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener" class="block bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 rounded-xl p-4 text-sm text-slate-200 transition space-y-2">
+                        <span class="flex items-center gap-2 font-bold text-amber-400"><i data-lucide="file-pen-line" class="w-5 h-5"></i> Write these in your Station Worksheet (Google Doc):</span>
+                        <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-300 space-y-1">
+                            <li>Chosen Brand Name</li>
+                            <li>Target Audience / Niche</li>
+                            <li>Unique Selling Point (USP)</li>
+                            <li>Winning Tagline</li>
+                            <li>Container type and vibe you used for your Gemini mockup (optional: paste a screenshot)</li>
+                            <li><strong>Marketer Reflection:</strong> In 1&ndash;2 sentences, why would someone pay $3.50 for your brand's water instead of drinking free tap water or buying a $0.99 generic bottle?</li>
+                        </ol>
+                        <span class="block text-xs text-slate-400">Nothing is typed on this page. First time? File &rarr; Make a copy.</span>
+                    </a>
                 </div>
 
                 <!-- Forensic Marketing Takeaways -->
@@ -413,7 +392,7 @@
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to The Brief
                     </button>
                     <button onclick="finishStation()" class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-amber-500/20">
-                        <i data-lucide="award" class="w-4 h-4"></i> Complete Station Activity
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Finish Station
                     </button>
                 </div>
 
@@ -520,20 +499,8 @@
             let progress = 25; // Phase 1 default
             if (currentPhase === 2) progress += 25;
 
-            const name = document.getElementById('rec-name')?.value.trim();
-            const audience = document.getElementById('rec-audience')?.value.trim();
-            const usp = document.getElementById('rec-usp')?.value.trim();
-            const tagline = document.getElementById('rec-tagline')?.value.trim();
-            const reflection = document.getElementById('rec-reflection')?.value.trim();
-
-            let filledCount = 0;
-            if (name) filledCount++;
-            if (audience) filledCount++;
-            if (usp) filledCount++;
-            if (tagline) filledCount++;
-            if (reflection && reflection.length > 5) filledCount += 2;
-
-            progress = Math.min(100, progress + (filledCount * 8));
+            if (currentPhase === 2) progress += 25; // answers are recorded in the Google Doc
+            progress = Math.min(100, progress);
 
             document.getElementById('progress-bar').style.width = `${progress}%`;
             document.getElementById('progress-percent').innerText = `${progress}%`;
@@ -552,7 +519,7 @@
                     origin: { y: 0.6 }
                 });
             }
-            alert("Awesome work! Make sure your brand concept and reflection are recorded on your rotation sheet, then return to the Station Menu.");
+            alert("Awesome work! Make sure your brand concept and reflection are written in your Station Worksheet (Google Doc), then return to the Station Menu.");
         }
 
         // Timer Logic
