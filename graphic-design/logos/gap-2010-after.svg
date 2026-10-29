@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Gap logo, October 2010 (one-week Laird & Partners redesign). Letterforms and square geometry copied exactly from the Wikimedia Commons file (Gap_logo_in_October_2010.svg); the blue square's gradient is sampled here from the original 174-stop ramp to 26 stops for file size — visually identical at display size. -->
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="461.03796" id="svg3592">
+  <defs id="defs3594">
+    <linearGradient id="gapGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1" y2="0" gradientTransform="matrix(52.805908,-52.806499,52.805908,52.806499,-48.736976,-74.222797)">
+      <stop offset="0" style="stop-color:#8da0d6;stop-opacity:1" />
+      <stop offset="0.03125" style="stop-color:#899dd4;stop-opacity:1" />
+      <stop offset="0.0664063" style="stop-color:#8499d0;stop-opacity:1" />
+      <stop offset="0.105469" style="stop-color:#7f95cc;stop-opacity:1" />
+      <stop offset="0.144531" style="stop-color:#7a91c9;stop-opacity:1" />
+      <stop offset="0.17968699" style="stop-color:#768ec6;stop-opacity:1" />
+      <stop offset="0.21093699" style="stop-color:#728bc3;stop-opacity:1" />
+      <stop offset="0.24218699" style="stop-color:#6e88bf;stop-opacity:1" />
+      <stop offset="0.27343801" style="stop-color:#6a84bc;stop-opacity:1" />
+      <stop offset="0.32031199" style="stop-color:#6580b7;stop-opacity:1" />
+      <stop offset="0.35156199" style="stop-color:#617db4;stop-opacity:1" />
+      <stop offset="0.390625" style="stop-color:#5c79b1;stop-opacity:1" />
+      <stop offset="0.42578101" style="stop-color:#5775ad;stop-opacity:1" />
+      <stop offset="0.47265601" style="stop-color:#5371a8;stop-opacity:1" />
+      <stop offset="0.50781202" style="stop-color:#506da4;stop-opacity:1" />
+      <stop offset="0.55078101" style="stop-color:#4a68a0;stop-opacity:1" />
+      <stop offset="0.58984399" style="stop-color:#46659c;stop-opacity:1" />
+      <stop offset="0.625" style="stop-color:#436299;stop-opacity:1" />
+      <stop offset="0.67968798" style="stop-color:#3e5c92;stop-opacity:1" />
+      <stop offset="0.71093702" style="stop-color:#3b598f;stop-opacity:1" />
+      <stop offset="0.75390601" style="stop-color:#36548a;stop-opacity:1" />
+      <stop offset="0.796875" style="stop-color:#325185;stop-opacity:1" />
+      <stop offset="0.85156202" style="stop-color:#2e4c7f;stop-opacity:1" />
+      <stop offset="0.90625" style="stop-color:#294779;stop-opacity:1" />
+      <stop offset="0.96093702" style="stop-color:#254273;stop-opacity:1" />
+      <stop offset="1" style="stop-color:#223f6f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <g id="g392" transform="matrix(4.4510069,0,0,4.4510069,982.6666,566.32822)">
+    <path d="m -48.551,-127.23598 v 0.0371 53.151972 H 3.8942632 v -53.151972 l -0.037136,-0.0371 h -52.3708732 -0.03713 z" id="path364" style="opacity:1;fill:url(#gapGrad);fill-rule:nonzero;stroke:none;stroke-width:1.19025" />
+    <path d="m -159.14098,-44.162543 h 13.07165 v -43.493215 h -33.80302 v 13.183176 h 17.80292 c -1.01409,11.154996 -7.66201,17.352215 -19.15504,17.352215 -15.88742,0 -21.85928,-13.521205 -21.85928,-26.929735 0,-14.084591 5.97186,-27.605798 21.85928,-27.605798 8.33808,0 14.986,4.61975 17.01419,13.521207 h 16.9015 c -1.9155,-18.253627 -17.46489,-28.394537 -33.91569,-28.394537 -24.90156,0 -39.54953,18.59166 -39.54953,42.479128 0,23.211405 14.64797,41.803063 39.54953,41.803063 7.77469,0 15.88742,-3.042271 22.08464,-11.042319 z" id="path4074" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <path d="m -101.26181,-66.697887 c 0,3.492978 -0.45071,13.408529 -12.95783,13.408529 -5.18313,0 -9.80287,-1.464797 -9.80287,-7.436663 0,-5.859189 4.50707,-7.54934 9.46484,-8.563431 4.95778,-0.901414 10.59161,-1.01409 13.29586,-3.380302 z m -20.95787,-17.802923 c 0.56338,-6.309896 4.50706,-8.788784 10.59161,-8.788784 5.63383,0 10.36626,1.01409 10.36626,7.887371 0,6.535249 -9.12682,6.197219 -18.92969,7.662017 -9.91555,1.352121 -19.83111,4.507068 -19.83111,17.690245 0,11.943733 8.78879,17.464892 19.83111,17.464892 7.09863,0 14.53529,-1.915504 19.60575,-7.21131 0.11272,1.915504 0.56338,3.831008 1.12676,5.633836 h 16.225448 c -1.464789,-2.366211 -2.028181,-7.662017 -2.028181,-12.957824 v -30.310037 c 0,-13.971916 -13.971906,-16.563476 -25.577607,-16.563476 -13.0705,0 -26.47903,4.507067 -27.38045,19.49307 z" id="path4076" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+    <path d="m -77.722638,-23.655379 h 16.000087 v -27.718475 h 0.225361 c 3.831001,5.746513 10.478936,8.788785 17.464889,8.788785 17.014189,0 25.577612,-14.535298 25.577612,-30.084685 0,-16.563478 -8.225393,-31.324126 -26.479022,-31.324126 -7.211315,0 -13.521207,2.81692 -17.35222,9.014135 h -0.225349 v -7.436665 h -15.211358 z m 29.408625,-30.986099 c -10.366267,0 -13.971918,-9.014138 -13.971918,-18.478983 0,-9.464845 3.380302,-18.817013 13.859237,-18.817013 10.253586,0 13.971918,9.577522 13.971918,18.817013 0,9.464845 -3.380302,18.478983 -13.859237,18.478983 z" id="path4078" style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+  </g>
+</svg>

@@ -61,6 +61,11 @@
         </div>
     </header>
 
+    <!-- Standard directions panel (same spot on every station) -->
+    <div id="station-guide"></div>
+    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["Look at each famous redesign.", "Decide <strong>Keep It</strong> or <strong>Scrap It</strong> and read what really happened. Answer all 12 to get your score."]};</script>
+    <script src="../assets/station-guide.js"></script>
+
     <!-- Main Container -->
     <main class="max-w-2xl mx-auto px-4 py-8 flex-grow w-full">
 
@@ -84,6 +89,24 @@
                 <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-5 text-center">
                     <span class="block text-[0.65rem] font-bold tracking-widest text-slate-500 mb-1.5">BRAND / REDESIGN</span>
                     <h2 class="text-2xl font-extrabold text-slate-100" id="company-name">---</h2>
+
+                    <!-- Before / After logos -->
+                    <div class="mt-4 grid grid-cols-2 gap-3 items-start">
+                        <figure class="flex flex-col items-center gap-1.5">
+                            <figcaption class="text-[0.65rem] font-bold tracking-widest text-slate-400">BEFORE</figcaption>
+                            <div class="bg-white rounded-xl w-full h-32 px-3 py-3 flex items-center justify-center shadow">
+                                <img id="logo-before" src="" alt="" class="max-h-24 max-w-full w-auto h-auto object-contain">
+                                <span id="logo-before-missing" class="hidden text-xs text-slate-500 italic text-center">Original image not available</span>
+                            </div>
+                        </figure>
+                        <figure class="flex flex-col items-center gap-1.5">
+                            <figcaption class="text-[0.65rem] font-bold tracking-widest text-amber-400">AFTER (THE REDESIGN)</figcaption>
+                            <div class="bg-white rounded-xl w-full h-32 px-3 py-3 flex items-center justify-center shadow">
+                                <img id="logo-after" src="" alt="" class="max-h-24 max-w-full w-auto h-auto object-contain">
+                                <span id="logo-after-missing" class="hidden text-xs text-slate-500 italic text-center">Original image not available</span>
+                            </div>
+                        </figure>
+                    </div>
 
                     <div class="mt-3">
                         <button class="bg-amber-500/10 border border-amber-500/40 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold hover:bg-amber-500/20 hover:border-amber-500 transition flex items-center gap-1.5 mx-auto" id="hint-btn" onclick="revealHint()">
@@ -118,11 +141,16 @@
                         <span id="feedback-title">Correct Prediction!</span>
                     </div>
                     <p class="text-sm leading-relaxed text-slate-300" id="feedback-explanation"></p>
-                    <div class="flex justify-end mt-4">
-                        <button class="bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition" id="next-btn" onclick="nextQuestion()">
-                            Next Redesign &rarr;
-                        </button>
-                    </div>
+                </div>
+
+                <!-- Previous / Next navigation (answer required to move forward) -->
+                <div class="flex items-center justify-between gap-3">
+                    <button id="prev-btn" onclick="prevQuestion()" class="invisible bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition">
+                        &larr; Previous Logo
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="invisible bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition">
+                        Next Logo &rarr;
+                    </button>
                 </div>
             </div>
         </section>

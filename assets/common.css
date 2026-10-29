@@ -102,8 +102,9 @@ body.light-theme .text-slate-300,
 body.light-theme .text-slate-400 {
     color: #334155 !important; /* slate-700 */
 }
-body.light-theme .text-slate-500 {
-    color: #64748b !important; /* slate-500 */
+body.light-theme .text-slate-500,
+body.light-theme .text-slate-600 {
+    color: #475569 !important; /* slate-600: readable muted labels on white */
 }
 
 /* Interactive Form Elements */
@@ -186,4 +187,41 @@ body.light-theme::-webkit-scrollbar-thumb {
 }
 body.light-theme::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+}
+
+/* ==========================================================================
+   LIGHT VIEW: extra contrast fixes (pale callout/tip text, hover states)
+   Pale -200 shades are near-white and vanish on light backgrounds.
+   ========================================================================== */
+body.light-theme .text-amber-200,
+body.light-theme .text-amber-400\/90 {
+    color: #78350f !important; /* amber-900 */
+}
+body.light-theme .text-emerald-200 {
+    color: #064e3b !important; /* emerald-900 */
+}
+body.light-theme .text-rose-200 {
+    color: #881337 !important; /* rose-900 */
+}
+body.light-theme .text-sky-200 {
+    color: #0c4a6e !important; /* sky-900 */
+}
+body.light-theme .text-purple-400 {
+    color: #6d28d9 !important; /* violet-700 */
+}
+body.light-theme .placeholder-slate-600::placeholder {
+    color: #64748b !important;
+}
+/* Hover states that would turn text near-white on light surfaces */
+body.light-theme .hover\:text-slate-100:hover,
+body.light-theme .hover\:text-slate-200:hover,
+body.light-theme .hover\:text-slate-300:hover {
+    color: #020617 !important;
+}
+body.light-theme .hover\:text-slate-400:hover {
+    color: #1e293b !important;
+}
+body.light-theme .hover\:text-amber-300:hover,
+body.light-theme .hover\:text-amber-400:hover {
+    color: #92400e !important;
 }

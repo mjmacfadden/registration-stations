@@ -66,6 +66,11 @@
         </div>
     </header>
 
+    <!-- Standard directions panel (same spot on every station) -->
+    <div id="station-guide"></div>
+    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; The Pitch (1 min):</strong> read the case brief.", "<strong>Phase 2 &ndash; You Be The CEO (3 min):</strong> answer the questions to unlock Phase 3.", "<strong>Phase 3 &ndash; Tomorrow's Blockbuster (3 min):</strong> read the real outcome, then write your disruption prediction in your worksheet."]};</script>
+    <script src="../assets/station-guide.js"></script>
+
     <!-- Main Container -->
     <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
 
@@ -284,7 +289,7 @@
 
                 </div>
 
-                <!-- The Final Step: Student Predictions & Google Form Submission -->
+                <!-- The Final Step: Student Predictions -> Google Doc worksheet -->
                 <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
                     <div class="border-b border-slate-800 pb-4">
                         <span class="text-xs font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
@@ -310,82 +315,40 @@
 
                     <!-- Brainstorming Sparks / Thought Starters -->
                     <div class="space-y-2">
-                        <span class="text-[0.7rem] uppercase tracking-wider text-slate-400 font-bold font-mono">Industry Thought-Starters (Click any card to load inspiration):</span>
+                        <span class="text-[0.7rem] uppercase tracking-wider text-slate-400 font-bold font-mono">Industry Thought-Starters (ideas to get you thinking):</span>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                            <button onclick="fillIdea('Traditional Movie Theaters', 'Direct-to-consumer home streaming & 4K laser projectors', 'Relying on overpriced concessions and ticket exclusivity while attendance drops')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                            <div class="p-2.5 rounded-lg bg-slate-900  border border-slate-800 text-left text-slate-300  transition">
                                 <span class="font-bold block text-slate-100">Movie Theaters</span>
                                 <span class="text-[0.65rem] text-slate-400">vs. Home streaming</span>
-                            </button>
-                            <button onclick="fillIdea('Cable TV Networks', 'Creator platforms (YouTube, TikTok, Twitch) & a la carte apps', 'Assuming older audiences won\'t cut the cord on expensive $150/mo bundles')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900  border border-slate-800 text-left text-slate-300  transition">
                                 <span class="font-bold block text-slate-100">Cable TV</span>
                                 <span class="text-[0.65rem] text-slate-400">vs. Creator platforms</span>
-                            </button>
-                            <button onclick="fillIdea('Traditional Car Dealerships', 'Direct online ordering with transparent fixed pricing (Tesla/Rivian)', 'Believing buyers prefer aggressive salesperson negotiations over 1-click apps')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900  border border-slate-800 text-left text-slate-300  transition">
                                 <span class="font-bold block text-slate-100">Car Dealerships</span>
                                 <span class="text-[0.65rem] text-slate-400">vs. Direct-to-consumer</span>
-                            </button>
-                            <button onclick="fillIdea('Traditional Search Engines', 'Conversational AI answering engines giving direct answers', 'Protecting ad-link revenue models instead of rethinking how people find info')" class="p-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-left text-slate-300 hover:text-amber-300 transition">
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-slate-900  border border-slate-800 text-left text-slate-300  transition">
                                 <span class="font-bold block text-slate-100">Search Engines</span>
                                 <span class="text-[0.65rem] text-slate-400">vs. Conversational AI</span>
-                            </button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Draft Prediction Card -->
-                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800 space-y-4">
-                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-                            <span class="text-xs font-mono uppercase text-slate-400 font-bold">Draft Your Prediction:</span>
-                            <span class="text-xs text-amber-400 flex items-center gap-1.5 font-medium">
-                                <i data-lucide="clipboard-pen-line" class="w-3.5 h-3.5"></i> Submit via Google Form below
-                            </span>
-                        </div>
-
-                        <div class="space-y-3 text-xs">
-                            <div>
-                                <label class="text-slate-300 font-semibold block mb-1">1. Company or Industry Under Threat Today:</label>
-                                <input id="pred-company" type="text" oninput="updatePredictionDraft()" placeholder="e.g. Traditional Movie Theaters, Legacy Cable TV, Gas Stations, Fast Fashion..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500">
-                            </div>
-                            <div>
-                                <label class="text-slate-300 font-semibold block mb-1">2. The Emerging Disruptive Threat or Technology:</label>
-                                <input id="pred-threat" type="text" oninput="updatePredictionDraft()" placeholder="e.g. Day-and-date 4K streaming releases, creator video platforms, EV home charging..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500">
-                            </div>
-                            <div>
-                                <label class="text-slate-300 font-semibold block mb-1">3. The Leadership Blind Spot (Why are they underestimating it?):</label>
-                                <textarea id="pred-blindspot" rows="2" oninput="updatePredictionDraft()" placeholder="e.g. They assume customers will always prefer their legacy experience and ignore how fast habits change..." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-amber-500"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Action Bar: Google Form Button + Copy Response -->
-                        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-800">
-                            <button onclick="copyPredictionText()" id="btn-copy-pred" class="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Prediction Draft</span>
-                            </button>
-
-                            <a id="btn-google-form" href="https://forms.google.com" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-600 hover:to-amber-500 text-slate-950 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-amber-500/20">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Submit to Google Form
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Instructor Configuration Note -->
-                    <p class="text-[0.7rem] text-slate-500 italic text-center">
-                        Instructor: Set your Google Form link in the script configuration variable <code>GOOGLE_FORM_URL</code>.
-                    </p>
-                </div>
-
-                <!-- Course Registration Pitch Card -->
-                <div class="p-6 rounded-2xl bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-950 border border-amber-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
-                    <div class="space-y-2">
-                        <span class="text-xs font-mono uppercase text-amber-400 font-bold">Why Take High School Entrepreneurship?</span>
-                        <h4 class="text-xl font-bold text-slate-100">Entrepreneurship (ENTR 220) &bull; Build the Future</h4>
-                        <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
-                            Learn how to spot overlooked opportunities, build scalable business models, pitch investors, and launch real ventures before established giants even see you coming.
-                        </p>
-                    </div>
-                    <a href="../index.html" class="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl whitespace-nowrap transition shadow-lg shadow-amber-500/20 shrink-0 flex items-center gap-2">
-                        Back to Station Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <!-- Record prediction in the Google Doc -->
+                    <a href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener" class="block bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 rounded-xl p-4 text-sm text-slate-200 transition space-y-2">
+                        <span class="flex items-center gap-2 font-bold text-amber-400"><i data-lucide="file-pen-line" class="w-5 h-5"></i> Write your prediction in your Station Worksheet (Google Doc):</span>
+                        <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-300 space-y-1">
+                            <li>Company or Industry Under Threat Today</li>
+                            <li>The Emerging Disruptive Threat or Technology</li>
+                            <li>The Leadership Blind Spot (Why are they underestimating it?)</li>
+                        </ol>
+                        <span class="block text-xs text-slate-400">Nothing is typed on this page. First time? File &rarr; Make a copy.</span>
                     </a>
+                    </div>
                 </div>
+
 
                 <!-- Finish / Action Controls -->
                 <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
@@ -396,6 +359,8 @@
                         <i data-lucide="check-circle" class="w-4 h-4"></i> Mark Station Complete
                     </button>
                 </div>
+
+        </section>
 
     </main>
 
@@ -414,8 +379,8 @@
     <!-- JavaScript Logic -->
     <script>
         // ======= CONFIGURATION =======
-        // Instructor: Paste your Google Form URL here so students can submit their predictions directly!
-        const GOOGLE_FORM_URL = "https://forms.google.com";
+        // Students record answers in the shared Google Doc worksheet (no backend).
+        const WORKSHEET_URL = window.WORKSHEET_URL;
 
         // State Variables
         let timerSeconds = 420; // 7 Minutes
@@ -428,14 +393,9 @@
         // Initialize Icons & App on Load
         window.onload = function() {
             lucide.createIcons();
-            startTimer();
+            // Timer waits for the student to press Play (see station directions).
             updateProgressBar();
 
-            // Set Google Form link
-            const formBtn = document.getElementById('btn-google-form');
-            if (formBtn && GOOGLE_FORM_URL) {
-                formBtn.href = GOOGLE_FORM_URL;
-            }
         };
 
         // Timer Logic
@@ -450,7 +410,7 @@
                         updateTimerDisplay();
                     } else {
                         pauseTimer();
-                        alert("7 minutes are up! Submit your disruption prediction and wrap up.");
+                        alert("7 minutes are up! Write your disruption prediction in your worksheet and wrap up.");
                     }
                 }, 1000);
             }
@@ -553,39 +513,6 @@
             }
         }
 
-        // Thought-Starter Quick Fill
-        function fillIdea(company, threat, blindspot) {
-            document.getElementById('pred-company').value = company;
-            document.getElementById('pred-threat').value = threat;
-            document.getElementById('pred-blindspot').value = blindspot;
-            updatePredictionDraft();
-        }
-
-        function updatePredictionDraft() {
-            updateProgressBar();
-        }
-
-        // Copy Prediction Draft to Clipboard
-        function copyPredictionText() {
-            const company = document.getElementById('pred-company').value.trim() || '[Company / Industry]';
-            const threat = document.getElementById('pred-threat').value.trim() || '[Disruptive Threat]';
-            const blindspot = document.getElementById('pred-blindspot').value.trim() || '[Leadership Blind Spot]';
-
-            const text = `DISRUPTIVE THREAT PREDICTION:\nCompany/Industry Under Threat: ${company}\nEmerging Disruptive Threat: ${threat}\nLeadership Blind Spot: ${blindspot}`;
-
-            const btn = document.getElementById('btn-copy-pred');
-            navigator.clipboard.writeText(text).then(() => {
-                btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> <span class="text-emerald-400">Copied to Clipboard!</span>`;
-                lucide.createIcons();
-                setTimeout(() => {
-                    btn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5"></i> <span>Copy Prediction Draft</span>`;
-                    lucide.createIcons();
-                }, 1500);
-            }).catch(() => {
-                alert("Please copy manually:\n\n" + text);
-            });
-        }
-
         // Progress Calculation
         function updateProgressBar() {
             let progress = 0;
@@ -600,9 +527,7 @@
 
             if (currentPhase === 3) progress += 15;
 
-            const company = document.getElementById('pred-company')?.value.trim();
-            const threat = document.getElementById('pred-threat')?.value.trim();
-            if (company || threat) progress += 15;
+            if (currentPhase === 3) progress += 15; // prediction is written in the Google Doc
 
             progress = Math.min(100, Math.round(progress));
 
@@ -624,14 +549,11 @@
                 });
             }
 
-            alert("Outstanding strategic thinking! Be sure to submit your prediction on the Google Form (or record it on your worksheet), then return to the Station Menu.");
+            alert("Outstanding strategic thinking! Be sure to write your prediction in your worksheet (Google Doc), then move to your next station.");
         }
 
         function restartCaseStudy() {
             userAnswers = { 1: null, 2: null, 3: null };
-            document.getElementById('pred-company').value = "";
-            document.getElementById('pred-threat').value = "";
-            document.getElementById('pred-blindspot').value = "";
 
             for (let i = 1; i <= 3; i++) {
                 document.getElementById(`q${i}-opt-A`).className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-sm transition flex items-center justify-between";
