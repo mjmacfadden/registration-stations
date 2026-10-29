@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Generate assets/station-qr-codes.pdf: one QR poster page per station + hub + worksheet.
+"""Generate assets/station-qr-codes.pdf (one QR poster page per station + hub + worksheet)
+and assets/qr/<slug>.svg (used by the hub's Settings > QR Codes modal).
 Usage: pip install qrcode reportlab pillow && python3 scripts/make_qr_pdf.py
 """
-import os, qrcode
+import os, re, qrcode
+import qrcode.image.svg
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
@@ -41,6 +43,13 @@ def main():
         c.setFont("Helvetica", 8); c.drawCentredString(W/2, 40, url)
         c.showPage()
     c.save(); print("wrote", out)
+
+    import re
+    qdir = os.path.join(root, "assets", "qr"); os.makedirs(qdir, exist_ok=True)
+    for title, sub, url in PAGES:
+        slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")
+        qrcode.make(url, image_factory=qrcode.image.svg.SvgPathFillImage, border=2).save(os.path.join(qdir, slug + ".svg"))
+    print("wrote", qdir)
 
 if __name__ == "__main__":
     main()
