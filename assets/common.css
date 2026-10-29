@@ -225,3 +225,13 @@ body.light-theme .hover\:text-amber-300:hover,
 body.light-theme .hover\:text-amber-400:hover {
     color: #92400e !important;
 }
+
+/* Light view: scrollbars inside elements (e.g. the phase-tab row's horizontal
+   scrollbar) were still using the dark track and showed as a dark bar. */
+::-webkit-scrollbar { height: 6px; }
+html.light-theme ::-webkit-scrollbar-track,
+body.light-theme ::-webkit-scrollbar-track { background: #f1f5f9; }
+html.light-theme ::-webkit-scrollbar-thumb,
+body.light-theme ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html.light-theme ::-webkit-scrollbar-thumb:hover,
+body.light-theme ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
