@@ -166,9 +166,14 @@
                 <div class="text-sm text-slate-400 font-semibold mt-1" id="score-rating">Creative Director!</div>
             </div>
 
-            <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center gap-2 mx-auto transition" onclick="restartQuiz()">
-                <i data-lucide="refresh-ccw" class="w-4 h-4"></i> Review Again
-            </button>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center gap-2 transition" onclick="reviewAnswers()">
+                    <i data-lucide="list-checks" class="w-4 h-4"></i> Review My Answers
+                </button>
+                <button class="bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold px-6 py-3 rounded-xl flex items-center gap-2 transition" onclick="restartQuiz()">
+                    <i data-lucide="refresh-ccw" class="w-4 h-4"></i> Play Again
+                </button>
+            </div>
         </section>
     </main>
 
