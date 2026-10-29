@@ -194,7 +194,8 @@ function loadQuestion() {
 
     feedbackCard.className = 'hidden rounded-xl p-5 border';
 
-    if (prevBtn) prevBtn.classList.toggle('hidden', currentIndex === 0);
+    if (prevBtn) prevBtn.classList.toggle('invisible', currentIndex === 0);
+    nextBtn.classList.add('invisible'); // answer required to advance
 
     // Revisiting an answered question: show it locked with its feedback.
     const prior = answers[currentIndex];
@@ -257,11 +258,12 @@ function showFeedback(q, isCorrect, usedHint) {
 
     feedbackExplanation.textContent = q.explanation;
     feedbackCard.classList.remove('hidden');
+    nextBtn.classList.remove('invisible');
 
     if (currentIndex === activeQuizData.length - 1) {
         nextBtn.textContent = 'View Final Results';
     } else {
-        nextBtn.textContent = 'Next Redesign →';
+        nextBtn.textContent = 'Next Logo →';
     }
 }
 
