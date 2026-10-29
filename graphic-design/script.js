@@ -84,7 +84,7 @@ const baseQuizData = [
         event: "A snack food company redesigns its animal-shaped cracker box art to show the animals roaming in open fields, after years of pressure from animal welfare groups over the previous 'circus train cage' imagery.",
         company: "Nabisco / Mondelez (\"Animal Crackers,\" 2018)",
         logoBefore: "logos/animal-crackers-2018-before.svg",
-        logoAfter: "logos/animal-crackers-2018-after.svg",
+        logoAfter: "logos/animal-crackers-2018-after.png",
         correctChoice: "KEEP",
         explanation: "The redesign was praised by advocacy groups like PETA and was welcomed by the public as a positive, values-aligned update. The new box art was kept permanently.",
         context: "Redesigns that respond to genuine social concerns and are well-received by advocacy groups tend to stick."
