@@ -366,6 +366,6 @@ function updateTimerDisplay() {
 // Initial Start
 window.onload = function () {
     lucide.createIcons();
-    startTimer();
+    // Timer waits for the student to press Play (see station directions).
     initQuiz();
 };
