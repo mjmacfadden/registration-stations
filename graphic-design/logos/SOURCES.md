@@ -17,4 +17,4 @@ Logos are trademarks of their owners and are shown for educational commentary.
 | meta-2021-before.svg | https://commons.wikimedia.org/wiki/File:Facebook,_Inc._Logo_2019.svg |
 | instagram-2016-before.svg | Simplified recreation of the 2010–2016 retro camera icon (no free original found) |
 | tropicana-2009-after.webp, uc-2012-after.jpg | Extracted from the images previously inlined in script.js |
-| nabisco (Animal Crackers 2018) | No free before/after box images found; only the Nabisco logo is shown |
+| animal-crackers-2018-before.svg / -after.svg | Simplified recreations of the Barnum's Animals box before (animals behind circus-wagon bars) and after the 2018 redesign (animals roaming free). No freely licensed photos of either box were found on Wikimedia Commons; replaces the Nabisco corporate logo previously shown. |

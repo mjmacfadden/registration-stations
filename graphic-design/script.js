@@ -83,8 +83,8 @@ const baseQuizData = [
         id: 9,
         event: "A snack food company redesigns its animal-shaped cracker box art to show the animals roaming in open fields, after years of pressure from animal welfare groups over the previous 'circus train cage' imagery.",
         company: "Nabisco / Mondelez (\"Animal Crackers,\" 2018)",
-        logoBefore: null,
-        logoAfter: "logos/nabisco-logo.svg",
+        logoBefore: "logos/animal-crackers-2018-before.svg",
+        logoAfter: "logos/animal-crackers-2018-after.svg",
         correctChoice: "KEEP",
         explanation: "The redesign was praised by advocacy groups like PETA and was welcomed by the public as a positive, values-aligned update. The new box art was kept permanently.",
         context: "Redesigns that respond to genuine social concerns and are well-received by advocacy groups tend to stick."
@@ -126,6 +126,7 @@ let currentIndex = 0;
 let score = 0;
 let hasAnswered = false;
 let hintUsedCurrentQuestion = false;
+let answers = []; // answers[i] = { choice, hint } once a question is answered
 
 // DOM Elements
 const questionCountEl = document.getElementById('question-count');
@@ -144,6 +145,7 @@ const feedbackIcon = document.getElementById('feedback-icon');
 const feedbackTitle = document.getElementById('feedback-title');
 const feedbackExplanation = document.getElementById('feedback-explanation');
 const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById('prev-btn');
 
 const quizCard = document.getElementById('quiz-card');
 const resultsCard = document.getElementById('results-card');
@@ -164,6 +166,7 @@ function initQuiz() {
     activeQuizData = shuffleArray(baseQuizData);
     currentIndex = 0;
     score = 0;
+    answers = [];
     scoreDisplayEl.innerHTML = `0 <span class="text-sm font-semibold text-slate-500">/ ${activeQuizData.length}</span>`;
     loadQuestion();
 }
@@ -190,6 +193,26 @@ function loadQuestion() {
     scrapBtn.disabled = false;
 
     feedbackCard.className = 'hidden rounded-xl p-5 border';
+
+    if (prevBtn) prevBtn.classList.toggle('hidden', currentIndex === 0);
+
+    // Revisiting an answered question: show it locked with its feedback.
+    const prior = answers[currentIndex];
+    if (prior) {
+        hasAnswered = true;
+        hintUsedCurrentQuestion = prior.hint;
+        if (prior.hint) { hintBtnEl.classList.add('hidden'); companyContextEl.classList.remove('hidden'); }
+        keepBtn.disabled = true;
+        scrapBtn.disabled = true;
+        showFeedback(q, prior.choice === q.correctChoice, prior.hint);
+    }
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        loadQuestion();
+    }
 }
 
 function revealHint() {
@@ -210,14 +233,20 @@ function makeChoice(choice) {
     keepBtn.disabled = true;
     scrapBtn.disabled = true;
 
-    if (isCorrect) {
-        const pointsEarned = hintUsedCurrentQuestion ? 0.5 : 1.0;
-        score += pointsEarned;
-        scoreDisplayEl.innerHTML = `${score} <span class="text-sm font-semibold text-slate-500">/ ${activeQuizData.length}</span>`;
+    answers[currentIndex] = { choice: choice, hint: hintUsedCurrentQuestion };
 
+    if (isCorrect) {
+        score += hintUsedCurrentQuestion ? 0.5 : 1.0;
+        scoreDisplayEl.innerHTML = `${score} <span class="text-sm font-semibold text-slate-500">/ ${activeQuizData.length}</span>`;
+    }
+    showFeedback(q, isCorrect, hintUsedCurrentQuestion);
+}
+
+function showFeedback(q, isCorrect, usedHint) {
+    if (isCorrect) {
         feedbackCard.className = 'rounded-xl p-5 border bg-emerald-500/10 border-emerald-500/40 text-emerald-200';
         feedbackIcon.textContent = '✓';
-        feedbackTitle.textContent = hintUsedCurrentQuestion
+        feedbackTitle.textContent = usedHint
             ? 'Correct Prediction! (+0.5 pts with Hint)'
             : 'Correct Prediction! (+1.0 pt)';
     } else {
