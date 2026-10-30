@@ -123,11 +123,16 @@
                         <span id="feedback-title">Correct Decision!</span>
                     </div>
                     <p class="text-sm leading-relaxed text-slate-300" id="feedback-explanation"></p>
-                    <div class="flex justify-end mt-4">
-                        <button class="bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition" id="next-btn" onclick="nextQuestion()">
-                            Next Question &rarr;
-                        </button>
-                    </div>
+                </div>
+
+                <!-- Previous / Next navigation (answer required to move forward) -->
+                <div class="flex items-center justify-between gap-3">
+                    <button id="prev-btn" onclick="prevQuestion()" class="invisible bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition">
+                        &larr; Previous Question
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="invisible bg-slate-800 hover:bg-slate-700 text-slate-100 px-5 py-2.5 rounded-xl text-sm font-semibold transition">
+                        Next Question &rarr;
+                    </button>
                 </div>
             </div>
         </section>
@@ -143,9 +148,14 @@
                 <div class="text-sm text-slate-400 font-semibold mt-1" id="score-rating">Market Wizard!</div>
             </div>
 
-            <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center gap-2 mx-auto transition" onclick="restartQuiz()">
-                <i data-lucide="refresh-ccw" class="w-4 h-4"></i> Play Again
-            </button>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-6 py-3 rounded-xl flex items-center gap-2 transition" onclick="reviewAnswers()">
+                    <i data-lucide="list-checks" class="w-4 h-4"></i> Review My Answers
+                </button>
+                <button class="bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold px-6 py-3 rounded-xl flex items-center gap-2 transition" onclick="restartQuiz()">
+                    <i data-lucide="refresh-ccw" class="w-4 h-4"></i> Play Again
+                </button>
+            </div>
         </section>
     </main>
 
