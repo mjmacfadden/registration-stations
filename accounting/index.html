@@ -763,7 +763,17 @@
             }
         };
 
+        // Lucide swaps <i> for <svg>, so replace whichever icon element is present.
+        function setOptionIcon(btn, name, cls) {
+            const old = btn.querySelector('i, svg');
+            const icon = document.createElement('i');
+            icon.setAttribute('data-lucide', name);
+            icon.className = cls;
+            if (old) old.replaceWith(icon); else btn.appendChild(icon);
+        }
+
         function answerQuestion(qNum, selected) {
+            if (answeredQuestions[qNum]) return;
             answeredQuestions[qNum] = true;
             const key = answersKey[qNum];
             const isCorrect = (selected === key.correct);
@@ -780,12 +790,10 @@
 
                 if (opt === key.correct) {
                     btn.className = "w-full text-left p-3.5 rounded-lg border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 text-sm flex items-center justify-between";
-                    btn.querySelector('i').setAttribute('data-lucide', 'check-circle-2');
-                    btn.querySelector('i').className = "w-4 h-4 text-emerald-400 shrink-0";
+                    setOptionIcon(btn, 'check-circle-2', 'w-4 h-4 text-emerald-400 shrink-0');
                 } else if (opt === selected && !isCorrect) {
                     btn.className = "w-full text-left p-3.5 rounded-lg border border-rose-500/50 bg-rose-500/10 text-rose-300 text-sm flex items-center justify-between";
-                    btn.querySelector('i').setAttribute('data-lucide', 'x-circle');
-                    btn.querySelector('i').className = "w-4 h-4 text-rose-400 shrink-0";
+                    setOptionIcon(btn, 'x-circle', 'w-4 h-4 text-rose-400 shrink-0');
                 } else {
                     btn.className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900/40 text-slate-500 text-sm flex items-center justify-between opacity-50";
                 }
@@ -796,7 +804,7 @@
                 feedbackEl.innerHTML = `<strong class="text-emerald-400 flex items-center gap-1.5 mb-1"><i data-lucide="check" class="w-4 h-4"></i> Forensic Lead Confirmed!</strong> ${key.explanation}`;
             } else {
                 feedbackEl.className = "p-4 rounded-xl border border-rose-500/30 bg-rose-500/10 text-rose-200 text-sm leading-relaxed";
-                feedbackEl.innerHTML = `<strong class="text-rose-400 flex items-center gap-1.5 mb-1"><i data-lucide="alert-circle" class="w-4 h-4"></i> Audit Discrepancy:</strong> ${key.explanation}`;
+                feedbackEl.innerHTML = `<strong class="text-rose-400 flex items-center gap-1.5 mb-1"><i data-lucide="alert-circle" class="w-4 h-4"></i> Not quite &mdash; the correct answer is ${key.correct}.</strong> ${key.explanation.replace(/^Correct!\s*/, '')}`;
             }
 
             updateProgressBar();
@@ -879,11 +887,7 @@
                     if (!btn) return;
                     btn.disabled = false;
                     btn.className = "w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group";
-                    const icon = btn.querySelector('i');
-                    if (icon) {
-                        icon.setAttribute('data-lucide', 'circle');
-                        icon.className = "w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0";
-                    }
+                    setOptionIcon(btn, 'circle', 'w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0');
                 });
             });
 
