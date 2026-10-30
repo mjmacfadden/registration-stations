@@ -199,16 +199,16 @@
                         <div class="flex items-start justify-between gap-3">
                             <h3 class="font-bold text-slate-100 text-base sm:text-lg flex items-center gap-2">
                                 <span class="w-6 h-6 rounded-full bg-slate-800 text-amber-400 text-xs flex items-center justify-center shrink-0">2</span>
-                                What is the business theory that describes small, low-end innovations eventually overtaking profitable incumbents?
+                                What do business experts call it when a small company with a cheaper, simpler product slowly wins customers away from a big, successful company?
                             </h3>
                         </div>
                         <div class="space-y-2">
                             <button onclick="answerQuestion(2, 'A')" id="q2-opt-A" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
-                                <span>A) Economies of Scale</span>
+                                <span>A) Economies of Scale (a big company saves money by making a lot of something)</span>
                                 <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
                             </button>
                             <button onclick="answerQuestion(2, 'B')" id="q2-opt-B" class="w-full text-left p-3.5 rounded-lg border border-slate-800 bg-slate-900 hover:border-slate-700 text-slate-300 text-sm transition flex items-center justify-between group">
-                                <span>B) Disruptive Innovation</span>
+                                <span>B) Disruptive Innovation (a new, simpler idea that shakes up a whole industry)</span>
                                 <i data-lucide="circle" class="w-4 h-4 text-slate-600 group-hover:text-slate-400 shrink-0"></i>
                             </button>
                         </div>
@@ -289,7 +289,7 @@
 
                 </div>
 
-                <!-- The Final Step: Student Predictions -> Google Doc worksheet -->
+                <!-- The Final Step: Student Predictions -> worksheet handout -->
                 <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
                     <div class="border-b border-slate-800 pb-4">
                         <span class="text-xs font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
@@ -336,16 +336,6 @@
                         </div>
                     </div>
 
-                    <!-- Record prediction in the Google Doc -->
-                    <a href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener" class="block bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 rounded-xl p-4 text-sm text-slate-200 transition space-y-2">
-                        <span class="flex items-center gap-2 font-bold text-amber-400"><i data-lucide="file-pen-line" class="w-5 h-5"></i> Write your prediction in your Station Worksheet (Google Doc):</span>
-                        <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-300 space-y-1">
-                            <li>Company or Industry Under Threat Today</li>
-                            <li>The Emerging Disruptive Threat or Technology</li>
-                            <li>The Leadership Blind Spot (Why are they underestimating it?)</li>
-                        </ol>
-                        <span class="block text-xs text-slate-400">Nothing is typed on this page. First time? File &rarr; Make a copy.</span>
-                    </a>
                     </div>
                 </div>
 
@@ -356,7 +346,7 @@
                         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Back to Deliberation
                     </button>
                     <button onclick="completeLab()" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-400 text-slate-950 font-bold rounded-xl flex items-center gap-2 transition shadow-lg shadow-emerald-500/20">
-                        <i data-lucide="check-circle" class="w-4 h-4"></i> Mark Station Complete
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Mark as Complete
                     </button>
                 </div>
 
@@ -379,8 +369,6 @@
     <!-- JavaScript Logic -->
     <script>
         // ======= CONFIGURATION =======
-        // Students record answers in the shared Google Doc worksheet (no backend).
-        const WORKSHEET_URL = window.WORKSHEET_URL;
 
         // State Variables
         let timerSeconds = 420; // 7 Minutes
@@ -410,7 +398,6 @@
                         updateTimerDisplay();
                     } else {
                         pauseTimer();
-                        alert("7 minutes are up! Write your disruption prediction in your worksheet and wrap up.");
                     }
                 }, 1000);
             }
@@ -490,7 +477,7 @@
                 feedback.innerHTML = `<strong>Strategic Rule:</strong> <span class="text-amber-400 font-semibold">Incumbent inertia</span> causes profitable leaders to discount small-scale threats that don't match their existing business model &mdash; until it's too late to respond.`;
             } else if (qNum === 2) {
                 feedback.className = "p-4 rounded-lg text-xs border bg-slate-900 text-slate-300 border-slate-800";
-                feedback.innerHTML = `<strong>Theory:</strong> This is <span class="text-amber-400 font-semibold">Disruptive Innovation</span> (Clayton Christensen) &mdash; cheaper, simpler innovations start in overlooked niches and eventually move upmarket to overtake industry leaders.`;
+                feedback.innerHTML = `<strong>Theory:</strong> This is <span class="text-amber-400 font-semibold">Disruptive Innovation</span> (Clayton Christensen) &mdash; cheaper, simpler ideas start with customers the big companies ignore, then keep improving until they beat the industry leaders.`;
             } else if (qNum === 3) {
                 feedback.className = "p-4 rounded-lg text-xs border bg-slate-900 text-slate-300 border-slate-800";
                 feedback.innerHTML = `<strong>Real Outcome:</strong> Netflix pivoted to streaming and is now worth over $150 billion. Blockbuster, unable to adapt, filed for bankruptcy in 2010 and shut down almost all of its stores.`;
@@ -549,7 +536,6 @@
                 });
             }
 
-            alert("Outstanding strategic thinking! Be sure to write your prediction in your worksheet (Google Doc), then move to your next station.");
         }
 
         function restartCaseStudy() {

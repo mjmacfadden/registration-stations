@@ -31,6 +31,7 @@
                     <i data-lucide="sun" id="theme-toggle-icon" class="w-3.5 h-3.5 text-amber-400"></i>
                     <span id="theme-toggle-label">Light View</span>
                 </button>
+                <div id="settings-slot"></div>
                 <a href="#stations" class="px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-slate-200 transition whitespace-nowrap">Station Menu</a>
             </nav>
         </div>
@@ -49,9 +50,6 @@
                 Welcome! Each station below is a self-contained, 7-minute hands-on activity that introduces you to one of our business degree programs. Pick a station, follow the numbered steps in the <strong>How this station works</strong> box at the top, and dive in &mdash; no sign-up required.
             </p>
         </section>
-
-        <!-- Worksheet banner -->
-        <section class="max-w-5xl mx-auto px-4 pb-6"><div id="worksheet-banner"></div></section>
 
         <!-- Station Grid -->
         <section id="stations" class="max-w-5xl mx-auto px-4 pb-16">
@@ -205,5 +203,6 @@
         lucide.createIcons();
     </script>
     <script src="assets/station-guide.js"></script>
+    <script src="assets/qr-modal.js" data-base=""></script>
 </body>
 </html>

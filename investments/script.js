@@ -166,6 +166,8 @@ let currentIndex = 0;
 let score = 0;
 let hasAnswered = false;
 let hintUsedCurrentQuestion = false;
+let answers = [];
+let reviewMode = false; // true when revisiting answers from the results screen // answers[i] = { choice, hint } once a question is answered
 
 // DOM Elements
 const questionCountEl = document.getElementById('question-count');
@@ -180,11 +182,11 @@ const buyBtn = document.getElementById('buy-btn');
 const sellBtn = document.getElementById('sell-btn');
 
 const feedbackCard = document.getElementById('feedback-card');
-const feedbackHeader = document.getElementById('feedback-header');
 const feedbackIcon = document.getElementById('feedback-icon');
 const feedbackTitle = document.getElementById('feedback-title');
 const feedbackExplanation = document.getElementById('feedback-explanation');
 const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById('prev-btn');
 
 const quizCard = document.getElementById('quiz-card');
 const resultsCard = document.getElementById('results-card');
@@ -205,6 +207,7 @@ function initQuiz() {
     activeQuizData = shuffleArray(baseQuizData);
     currentIndex = 0;
     score = 0;
+    answers = [];
     scoreDisplayEl.innerHTML = `0 <span class="text-sm font-semibold text-slate-500">/ ${activeQuizData.length}</span>`;
     loadQuestion();
 }
@@ -214,29 +217,48 @@ function loadQuestion() {
     hintUsedCurrentQuestion = false;
     const q = activeQuizData[currentIndex];
 
-    // UI Updates
     questionCountEl.textContent = `Question ${currentIndex + 1} of ${activeQuizData.length}`;
     progressFillEl.style.width = `${((currentIndex + 1) / activeQuizData.length) * 100}%`;
-    
+
     eventTextEl.textContent = q.event;
     companyNameEl.textContent = q.company;
-    
-    // Reset Hint
+
+
     companyContextEl.textContent = q.context;
     companyContextEl.classList.add('hidden');
     hintBtnEl.classList.remove('hidden');
 
-    // Reset Buttons & Feedback
     buyBtn.disabled = false;
     sellBtn.disabled = false;
 
     feedbackCard.className = 'hidden rounded-xl p-5 border';
+
+    if (prevBtn) prevBtn.classList.toggle('invisible', currentIndex === 0);
+    nextBtn.classList.add('invisible'); // answer required to advance
+
+    // Revisiting an answered question: show it locked with its feedback.
+    const prior = answers[currentIndex];
+    if (prior) {
+        hasAnswered = true;
+        hintUsedCurrentQuestion = prior.hint;
+        if (prior.hint) { hintBtnEl.classList.add('hidden'); companyContextEl.classList.remove('hidden'); }
+        buyBtn.disabled = true;
+        sellBtn.disabled = true;
+        showFeedback(q, prior.choice === q.correctChoice, prior.hint);
+    }
+}
+
+function prevQuestion() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        loadQuestion();
+    }
 }
 
 function revealHint() {
     if (hintUsedCurrentQuestion) return;
     hintUsedCurrentQuestion = true;
-    
+
     hintBtnEl.classList.add('hidden');
     companyContextEl.classList.remove('hidden');
 }
@@ -251,15 +273,21 @@ function makeChoice(choice) {
     buyBtn.disabled = true;
     sellBtn.disabled = true;
 
-    if (isCorrect) {
-        const pointsEarned = hintUsedCurrentQuestion ? 0.5 : 1.0;
-        score += pointsEarned;
-        scoreDisplayEl.innerHTML = `${score} <span class="text-sm font-semibold text-slate-500">/ ${activeQuizData.length}</span>`;
+    answers[currentIndex] = { choice: choice, hint: hintUsedCurrentQuestion };
 
+    if (isCorrect) {
+        score += hintUsedCurrentQuestion ? 0.5 : 1.0;
+        scoreDisplayEl.innerHTML = `${score} <span class="text-sm font-semibold text-slate-500">/ ${activeQuizData.length}</span>`;
+    }
+    showFeedback(q, isCorrect, hintUsedCurrentQuestion);
+}
+
+function showFeedback(q, isCorrect, usedHint) {
+    if (isCorrect) {
         feedbackCard.className = 'rounded-xl p-5 border bg-emerald-500/10 border-emerald-500/40 text-emerald-200';
         feedbackIcon.textContent = '✓';
-        feedbackTitle.textContent = hintUsedCurrentQuestion 
-            ? 'Correct Decision! (+0.5 pts with Hint)' 
+        feedbackTitle.textContent = usedHint
+            ? 'Correct Decision! (+0.5 pts with Hint)'
             : 'Correct Decision! (+1.0 pt)';
     } else {
         feedbackCard.className = 'rounded-xl p-5 border bg-rose-500/10 border-rose-500/40 text-rose-200';
@@ -269,16 +297,17 @@ function makeChoice(choice) {
 
     feedbackExplanation.textContent = q.explanation;
     feedbackCard.classList.remove('hidden');
+    nextBtn.classList.remove('invisible');
 
     if (currentIndex === activeQuizData.length - 1) {
-        nextBtn.textContent = 'View Final Results';
+        nextBtn.textContent = reviewMode ? 'Back to Results' : 'View Final Results';
     } else {
         nextBtn.textContent = 'Next Question →';
     }
 }
 
 function nextQuestion() {
-    if (currentIndex < activeQuizData.length - 1) {
+    if (currentIndex < activeQuizData.length - 1 && (!reviewMode || answers[currentIndex + 1])) {
         currentIndex++;
         loadQuestion();
     } else {
@@ -306,10 +335,19 @@ function showResults() {
     scoreRatingEl.textContent = rating;
 }
 
-function restartQuiz() {
+function reviewAnswers() {
+    reviewMode = true;
     resultsCard.classList.add('hidden');
     quizCard.classList.remove('hidden');
-    
+    currentIndex = 0;
+    loadQuestion();
+}
+
+function restartQuiz() {
+    reviewMode = false;
+    resultsCard.classList.add('hidden');
+    quizCard.classList.remove('hidden');
+
     initQuiz();
 }
 
@@ -359,7 +397,7 @@ function resetTimer() {
 function updateTimerDisplay() {
     const mins = Math.floor(timerSeconds / 60);
     const secs = timerSeconds % 60;
-    document.getElementById('timer-display').innerText = 
+    document.getElementById('timer-display').innerText =
         `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
@@ -369,3 +407,4 @@ window.onload = function () {
     // Timer waits for the student to press Play (see station directions).
     initQuiz();
 };
+

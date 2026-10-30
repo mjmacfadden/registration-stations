@@ -68,7 +68,7 @@
 
     <!-- Standard directions panel (same spot on every station) -->
     <div id="station-guide"></div>
-    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; Setup &amp; Rules (1 min):</strong> read the rules and pick your roles.", "<strong>Phase 2 &ndash; Draw It! (3 min):</strong> complete the back-to-back drawing, then unlock Phase 3.", "<strong>Phase 3 &ndash; Compare &amp; Debrief (3 min):</strong> compare drawings and answer the debrief question."]};</script>
+    <script>window.STATION_GUIDE = {"minutes": 7, "steps": ["<strong>Phase 1 &ndash; Setup &amp; Rules (1 min):</strong> read the rules and pick your roles (extra person? use two Artists for one Delegator).", "<strong>Phase 2 &ndash; Draw It! (3 min):</strong> complete the back-to-back drawing, then unlock Phase 3.", "<strong>Phase 3 &ndash; Compare &amp; Debrief (3 min):</strong> compare drawings and answer the debrief question."]};</script>
     <script src="../assets/station-guide.js"></script>
 
     <!-- Main Container -->
@@ -136,6 +136,12 @@
                         <p class="text-slate-200 font-medium">Sits back-to-back with Person A, holding blank paper.</p>
                         <p class="text-xs text-slate-400">Draws only what they hear — never seeing the target image until the reveal.</p>
                     </div>
+                </div>
+
+                <!-- Group-of-three option -->
+                <div class="bg-sky-500/10 border border-sky-500/30 rounded-xl p-4 mb-6 text-sm text-slate-300 flex items-start gap-3">
+                    <i data-lucide="users" class="w-5 h-5 text-sky-400 mt-0.5 shrink-0"></i>
+                    <p><strong class="text-sky-400">Extra person in your group?</strong> Use two Artists. Both sit back-to-back with the same Delegator and draw from the same instructions at the same time. <strong class="text-slate-100">Fun extension:</strong> in Phase 3, compare the two drawings with each other &mdash; same words, how different did they turn out?</p>
                 </div>
 
                 <!-- Narrative Brief -->
@@ -221,7 +227,7 @@
                 <div class="border-b border-slate-800 pb-4">
                     <span class="text-xs font-mono uppercase text-amber-400">Hold Up Both Drawings</span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 serif">Compare & Debrief</h2>
-                    <p class="text-sm text-slate-400 mt-1">Hold the Artist's drawing next to the target image (tap <strong>Phase 2: Draw It!</strong> to see it again). How close did it get?</p>
+                    <p class="text-sm text-slate-400 mt-1">Hold the Artist's drawing next to the target image (tap <strong>Phase 2: Draw It!</strong> to see it again). How close did it get? (Two Artists? Compare both drawings to each other, too.)</p>
                 </div>
 
                 <!-- Takeaway Cards -->
@@ -260,10 +266,6 @@
                     <p class="text-xs text-slate-400">
                         Pick one instruction that caused the biggest mismatch between the drawing and the real image. Rewrite it to be clearer and more precise.
                     </p>
-                                        <a href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener" class="flex items-center gap-3 bg-amber-500/10 border border-amber-500/40 hover:border-amber-500 rounded-lg p-3 text-sm text-slate-200 transition">
-                        <i data-lucide="file-pen-line" class="w-5 h-5 text-amber-400 shrink-0"></i>
-                        <span><strong class="text-amber-400">Write your rewritten instruction in your Station Worksheet (Google Doc).</strong> Nothing is typed on this page. (First time? File &rarr; Make a copy.)</span>
-                    </a>
 
                     <!-- Expandable Instructor Sample Answer -->
                     <details class="group border border-slate-800 rounded-lg bg-slate-900/50">
@@ -292,7 +294,7 @@
         <section id="completion-section" class="hidden my-8 no-print">
             <div class="bg-slate-900 border-2 border-amber-500/40 rounded-2xl p-6 shadow-xl text-center space-y-4">
                 <h2 class="text-2xl font-extrabold text-slate-100 serif">Station Complete!</h2>
-                <p class="text-sm text-slate-300">Make sure every answer for this station is written in your <a href="https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk" target="_blank" rel="noopener" class="text-amber-400 font-semibold underline">Station Worksheet (Google Doc)</a>, then head to your next station.</p>
+                <p class="text-sm text-slate-300">Make sure every answer for this station is on your Station Worksheet handout, then head to your next station.</p>
                 <div class="flex flex-wrap justify-center gap-3">
                     <button onclick="restartCaseStudy()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium rounded-xl text-sm transition">Restart Activity</button>
                 </div>

@@ -126,7 +126,8 @@ let currentIndex = 0;
 let score = 0;
 let hasAnswered = false;
 let hintUsedCurrentQuestion = false;
-let answers = []; // answers[i] = { choice, hint } once a question is answered
+let answers = [];
+let reviewMode = false; // true when revisiting answers from the results screen // answers[i] = { choice, hint } once a question is answered
 
 // DOM Elements
 const questionCountEl = document.getElementById('question-count');
@@ -261,14 +262,14 @@ function showFeedback(q, isCorrect, usedHint) {
     nextBtn.classList.remove('invisible');
 
     if (currentIndex === activeQuizData.length - 1) {
-        nextBtn.textContent = 'View Final Results';
+        nextBtn.textContent = reviewMode ? 'Back to Results' : 'View Final Results';
     } else {
         nextBtn.textContent = 'Next Logo →';
     }
 }
 
 function nextQuestion() {
-    if (currentIndex < activeQuizData.length - 1) {
+    if (currentIndex < activeQuizData.length - 1 && (!reviewMode || answers[currentIndex + 1])) {
         currentIndex++;
         loadQuestion();
     } else {
@@ -296,7 +297,16 @@ function showResults() {
     scoreRatingEl.textContent = rating;
 }
 
+function reviewAnswers() {
+    reviewMode = true;
+    resultsCard.classList.add('hidden');
+    quizCard.classList.remove('hidden');
+    currentIndex = 0;
+    loadQuestion();
+}
+
 function restartQuiz() {
+    reviewMode = false;
     resultsCard.classList.add('hidden');
     quizCard.classList.remove('hidden');
 
