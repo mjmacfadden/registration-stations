@@ -448,24 +448,24 @@
                 <div class="mt-8 bg-slate-950 p-5 rounded-xl border border-slate-800">
                     <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
                         <span class="text-xs font-mono uppercase text-amber-400 font-bold">Forensic Evidence Tally</span>
-                        <span class="text-xs text-slate-400">Total Unaccounted / Diverted Funds</span>
+                        <span class="text-xs text-slate-400">Total Unaccounted / Diverted Funds &bull; amounts unlock as you answer</span>
                     </div>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                         <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
                             <span class="text-[0.65rem] text-slate-400 uppercase block">Financing Skim</span>
-                            <span class="text-base sm:text-lg font-mono font-bold text-rose-400">$10,000</span>
+                            <span id="tally-1" data-amount="$10,000" class="text-base sm:text-lg font-mono font-bold text-rose-400">???</span>
                         </div>
                         <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
                             <span class="text-[0.65rem] text-slate-400 uppercase block">Ghost Expenses</span>
-                            <span class="text-base sm:text-lg font-mono font-bold text-rose-400">$8,500</span>
+                            <span id="tally-2" data-amount="$8,500" class="text-base sm:text-lg font-mono font-bold text-rose-400">???</span>
                         </div>
                         <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
                             <span class="text-[0.65rem] text-slate-400 uppercase block">POS Liquidated</span>
-                            <span class="text-base sm:text-lg font-mono font-bold text-amber-400">$1,000</span>
+                            <span id="tally-3" data-amount="$1,000" class="text-base sm:text-lg font-mono font-bold text-amber-400">???</span>
                         </div>
                         <div class="p-3 bg-slate-900 rounded-lg border border-amber-500/40 bg-amber-500/5">
                             <span class="text-[0.65rem] text-amber-300 uppercase block font-bold">Total Diverted</span>
-                            <span class="text-base sm:text-lg font-mono font-bold text-emerald-400">$18,500</span>
+                            <span id="tally-total" data-amount="$18,500" class="text-base sm:text-lg font-mono font-bold text-emerald-400">???</span>
                         </div>
                     </div>
                 </div>
@@ -772,6 +772,16 @@
             if (old) old.replaceWith(icon); else btn.appendChild(icon);
         }
 
+        // Reveal each tally amount once its question is answered; total after all three.
+        function updateTally() {
+            [1, 2, 3].forEach(n => {
+                const el = document.getElementById(`tally-${n}`);
+                if (el) el.textContent = answeredQuestions[n] ? el.dataset.amount : '???';
+            });
+            const total = document.getElementById('tally-total');
+            if (total) total.textContent = [1, 2, 3].every(n => answeredQuestions[n]) ? total.dataset.amount : '???';
+        }
+
         function answerQuestion(qNum, selected) {
             if (answeredQuestions[qNum]) return;
             answeredQuestions[qNum] = true;
@@ -807,6 +817,7 @@
                 feedbackEl.innerHTML = `<strong class="text-rose-400 flex items-center gap-1.5 mb-1"><i data-lucide="alert-circle" class="w-4 h-4"></i> Not quite &mdash; the correct answer is ${key.correct}.</strong> ${key.explanation.replace(/^Correct!\s*/, '')}`;
             }
 
+            updateTally();
             updateProgressBar();
             lucide.createIcons();
         }
@@ -891,6 +902,7 @@
                 });
             });
 
+            updateTally();
             switchPhase(1);
             lucide.createIcons();
         }
