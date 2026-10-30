@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate assets/station-qr-codes.pdf (one QR poster page per station + hub + worksheet)
+"""Generate assets/station-qr-codes.pdf (one QR poster page per station + hub)
 and assets/qr/<slug>.svg (used by the hub's Settings > QR Codes modal).
 Usage: pip install qrcode reportlab pillow && python3 scripts/make_qr_pdf.py
 """
@@ -10,7 +10,6 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
 BASE = "https://mjmacfadden.github.io/registration-stations/"
-DOC = "https://docs.google.com/document/d/1T4CoDCfOeXmaG8HfRkp6mB3KqLw1KKSL0WY6ReUTmXg/edit?usp=drivesdk"
 PAGES = [
     ("Station Menu", "Start here", BASE),
     ("Business Law", "The $67 Million Pants", BASE + "law/"),
@@ -20,7 +19,6 @@ PAGES = [
     ("Marketing", "Build a Bottled Water Brand", BASE + "marketing/"),
     ("Entrepreneurship", "The $50 Million Pitch", BASE + "entrepreneurship/"),
     ("Graphic Design", "Keep It or Scrap It?", BASE + "graphic-design/"),
-    ("Station Worksheet", "Google Doc: File > Make a copy, then write your answers", DOC),
 ]
 
 def main():
@@ -39,7 +37,7 @@ def main():
         c.setFont("Helvetica-Bold", 20); c.drawCentredString(W/2, H-200-s, "Scan to open")
         c.setFont("Helvetica", 12)
         c.drawCentredString(W/2, H-230-s, "Directions are always in the \"How this station works\" box at the top.")
-        c.drawCentredString(W/2, H-248-s, "Write your answers in your Station Worksheet (Google Doc).")
+        c.drawCentredString(W/2, H-248-s, "Write your answers on your Station Worksheet handout.")
         c.setFont("Helvetica", 8); c.drawCentredString(W/2, 40, url)
         c.showPage()
     c.save(); print("wrote", out)

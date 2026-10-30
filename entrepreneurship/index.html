@@ -289,7 +289,7 @@
 
                 </div>
 
-                <!-- The Final Step: Student Predictions -> Google Doc worksheet -->
+                <!-- The Final Step: Student Predictions -> worksheet handout -->
                 <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
                     <div class="border-b border-slate-800 pb-4">
                         <span class="text-xs font-mono uppercase text-amber-400 font-bold flex items-center gap-1.5">
@@ -369,8 +369,6 @@
     <!-- JavaScript Logic -->
     <script>
         // ======= CONFIGURATION =======
-        // Students record answers in the shared Google Doc worksheet (no backend).
-        const WORKSHEET_URL = window.WORKSHEET_URL;
 
         // State Variables
         let timerSeconds = 420; // 7 Minutes
@@ -400,7 +398,7 @@
                         updateTimerDisplay();
                     } else {
                         pauseTimer();
-                        alert("7 minutes are up! Write your disruption prediction in your worksheet and wrap up.");
+                        alert("7 minutes are up! Write your disruption prediction on your worksheet handout and wrap up.");
                     }
                 }, 1000);
             }
@@ -539,7 +537,7 @@
                 });
             }
 
-            alert("Outstanding strategic thinking! Be sure to write your prediction in your worksheet (Google Doc), then move to your next station.");
+            alert("Outstanding strategic thinking! Be sure to write your prediction on your worksheet handout, then move to your next station.");
         }
 
         function restartCaseStudy() {

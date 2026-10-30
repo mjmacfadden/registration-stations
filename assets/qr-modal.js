@@ -13,8 +13,7 @@
         ['Investments', 'Buy or Sell? Historical Market Quiz', 'investments'],
         ['Marketing', 'Build a Bottled Water Brand', 'marketing'],
         ['Entrepreneurship', 'The $50 Million Pitch', 'entrepreneurship'],
-        ['Graphic Design', 'Keep It or Scrap It?', 'graphic-design'],
-        ['Station Worksheet', 'Google Doc: File \u2192 Make a copy', 'station-worksheet']
+        ['Graphic Design', 'Keep It or Scrap It?', 'graphic-design']
     ];
 
     var css = document.createElement('style');
