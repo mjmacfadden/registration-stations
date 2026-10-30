@@ -496,10 +496,6 @@
                         </span>
                         <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-100 serif">Fraud Confirmed: $18,500 Skimmed</h2>
                     </div>
-                    <div class="bg-slate-950 px-5 py-3 rounded-2xl border border-slate-800 text-center">
-                        <span class="text-[0.65rem] text-slate-400 uppercase tracking-wider block font-bold">Investigation Score</span>
-                        <span class="text-2xl font-black font-mono text-emerald-400" id="final-score-display">3 / 3</span>
-                    </div>
                 </div>
 
                 <!-- The 3 Pillars of Marcus's Scheme -->
@@ -624,8 +620,6 @@
 
             // Trigger confetti if reaching phase 3
             if (phaseNum === 3) {
-                const totalScore = userScores[1] + userScores[2] + userScores[3];
-                document.getElementById('final-score-display').innerText = `${totalScore} / 3`;
                 triggerConfetti();
             }
 
